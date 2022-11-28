@@ -62,6 +62,14 @@ public class Crazy8Game {
 
     }
 
+    public void dealPlayerCards(){
+        for(int i = 0;i<players.size();i++){
+            for(int j = 0;j<5;j++){
+                playerDrawCard(players.get(i),null);
+            }
+        }
+    }
+
     public String getCurrentTopCard() {
         return currentTopCard;
     }
