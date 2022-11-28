@@ -1,5 +1,6 @@
 package com.example.A3.model;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -62,4 +63,22 @@ class Crazy8GameTest {
         assertEquals(1,game.getPlayers().get(1).getHand().size());
         assertEquals("KS",game.getPlayers().get(1).getHand().get(0));
     }
+
+    @Test
+    void dealPlayerCards() {
+
+        players.add(new Player(null,"p1"));
+        players.add(new Player(null,"p2"));
+        players.add(new Player(null,"p3"));
+        players.add(new Player(null,"p4"));
+        game = new Crazy8Game(players);
+        game.dealPlayerCards();
+        for(int i = 0;i< players.size();i++){
+            assertEquals(5,players.get(i).getHand().size());
+        }
+        assertEquals(32,game.getDeck().size());
+    }
+
+
+
 }
