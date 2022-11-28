@@ -46,6 +46,20 @@ public class Crazy8Game {
 
     //player draws a card and places in hand
     public void playerDrawCard(Player p,String riggedCard){
+
+        ArrayList<String> newHand;
+        if(p.getHand() == null){
+            newHand = new ArrayList<>();
+        }else{
+            newHand = p.getHand();
+        }
+        if(riggedCard != null){
+            newHand.add(drawCard(riggedCard));
+        }else{
+            newHand.add(drawCard(null));
+        }
+        p.setHand(newHand);
+
     }
 
     public String getCurrentTopCard() {
