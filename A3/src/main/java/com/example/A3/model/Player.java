@@ -24,4 +24,8 @@ public class Player {
     public ArrayList<String> getHand() {
         return hand;
     }
+
+    public void setHand(ArrayList<String> hand) {
+        this.hand = hand;
+    }
 }

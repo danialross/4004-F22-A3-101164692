@@ -17,6 +17,7 @@ public class Crazy8Game {
         Collections.shuffle(deck);
     }
 
+    // when card is taken from draw deck and place in the middle
     public String drawCard(String riggedCard){
 
         if(riggedCard != null){
@@ -42,17 +43,9 @@ public class Crazy8Game {
             }
         }
     }
-    public void dealPlayerCards(ArrayList<ArrayList<String>> playersDeck){
-        if(playersDeck!=null){
 
-        }else{
-            for( int i = 0 ;i < players.size();i++){
-
-            }
-
-        }
-
-
+    //player draws a card and places in hand
+    public void playerDrawCard(Player p,String riggedCard){
     }
 
     public String getCurrentTopCard() {
@@ -65,5 +58,9 @@ public class Crazy8Game {
 
     public ArrayList<String> getDeck() {
         return deck;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 }

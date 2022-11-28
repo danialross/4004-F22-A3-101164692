@@ -11,7 +11,6 @@ class Crazy8GameTest {
     Crazy8Game game;
     ArrayList<Player> players = new ArrayList<>();
 
-
     @Test
     void generateDeck() {
         game = new Crazy8Game(null);
@@ -49,10 +48,18 @@ class Crazy8GameTest {
     }
 
     @Test
-    void dealPlayerCards() {
-        for(int i = 0;i< players.size();i++){
-        assertEquals(5,players.get(i).getHand().size());
-    }
-        assertEquals(32,game.getDeck().size());
+    void playerDrawCard() {
+        players.add(new Player(null,"p1"));
+        players.add(new Player(null,"p2"));
+        players.add(new Player(null,"p3"));
+        players.add(new Player(null,"p4"));
+        game = new Crazy8Game(players);
+
+        game.playerDrawCard(game.getPlayers().get(0),null);
+        assertEquals(1,game.getPlayers().get(0));
+
+        game.playerDrawCard(game.getPlayers().get(1),"KS");
+        assertEquals(1,game.getPlayers().get(0));
+        assertEquals("KS",game.getPlayers().get(0).getHand().get(0));
     }
 }
