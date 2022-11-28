@@ -17,6 +17,20 @@ public class Crazy8Game {
         Collections.shuffle(deck);
     }
 
+    public String drawCard(String riggedCard){
+
+        if(riggedCard != null){
+            if(deck.remove(riggedCard)){
+                return riggedCard;
+            }else{
+                return null;
+            }
+
+        }else{
+            return deck.remove(0);
+        }
+
+    }
     public void generateDeck(){
         String[] suit = {"D","C","H","S"};
         String[] rank = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
@@ -28,12 +42,6 @@ public class Crazy8Game {
             }
         }
     }
-//
-//    public Card drawCard(Card rigCard){
-//        if( deck.contains(rigCard)){
-//            deck.remove(rigCard)
-//        }
-//    }
 
     public String getCurrentTopCard() {
         return currentTopCard;
