@@ -15,7 +15,6 @@ class Crazy8GameTest {
     @Test
     void generateDeck() {
         game = new Crazy8Game(null);
-
         ArrayList<String> cards = game.getDeck();
 
         String[] deck = {
@@ -34,12 +33,18 @@ class Crazy8GameTest {
                 "KD", "KC", "KH", "KS",
         };
 
-
         assertEquals(52, cards.size());
         for (int i = 0; i < cards.size(); i++) {
             assertTrue(cards.contains(deck[i]));
         }
+    }
 
+    @Test
+    void drawCard() {
+        game = new Crazy8Game(null);
+        ArrayList<String> cards = game.getDeck();
 
+        assertEquals("AC",game.drawCard("AC"));
+        assertEquals(null,game.drawCard("AX"));
     }
 }
