@@ -6,12 +6,12 @@ import java.util.Collections;
 
 public class Crazy8Game {
     private ArrayList<String> deck = new ArrayList<>();
-    private ArrayList<String> players;
+    private ArrayList<Player> players;
     private String currentTopCard;
     private int currPlayerIndex = 0;
     private int direction = 1;
 
-    public Crazy8Game(ArrayList<String> players){
+    public Crazy8Game(ArrayList<Player> players){
         this.players = players;
         generateDeck();
         Collections.shuffle(deck);
@@ -42,7 +42,15 @@ public class Crazy8Game {
             }
         }
     }
-    public void dealPlayerCards(){
+    public void dealPlayerCards(ArrayList<ArrayList<String>> playersDeck){
+        if(playersDeck!=null){
+
+        }else{
+            for( int i = 0 ;i < players.size();i++){
+
+            }
+
+        }
 
 
     }
@@ -52,7 +60,7 @@ public class Crazy8Game {
     }
 
     public String getCurrentPlayerTurn(){
-        return players.get(currPlayerIndex);
+        return players.get(currPlayerIndex).getName();
     }
 
     public ArrayList<String> getDeck() {

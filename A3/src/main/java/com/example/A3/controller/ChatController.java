@@ -45,12 +45,7 @@ public class ChatController {
                     .content("4 Players Have Joined, Game Is Starting")
                     .build();
             sendingOperations.convertAndSend("/topic/public",newMessage);
-
-            ArrayList<String> playerNames = new ArrayList<>();
-            for(int i = 0;i< players.size();i++){
-                playerNames.add(players.get(i).getName());
-            }
-            game = new Crazy8Game(playerNames);
+            game = new Crazy8Game(players);
         }
     }
 
