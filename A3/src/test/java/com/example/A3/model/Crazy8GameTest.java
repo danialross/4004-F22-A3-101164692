@@ -47,4 +47,12 @@ class Crazy8GameTest {
         assertEquals("AC",game.drawCard("AC"));
         assertEquals(null,game.drawCard("AX"));
     }
+
+    @Test
+    void dealPlayerCards() {
+        for(int i = 0;i< players.size();i++){
+        assertEquals(5,players.get(i).getHand().size());
+    }
+        assertEquals(32,game.getDeck().size());
+    }
 }

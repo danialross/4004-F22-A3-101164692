@@ -42,6 +42,10 @@ public class Crazy8Game {
             }
         }
     }
+    public void dealPlayerCards(){
+
+
+    }
 
     public String getCurrentTopCard() {
         return currentTopCard;

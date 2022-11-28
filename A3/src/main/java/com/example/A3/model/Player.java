@@ -21,4 +21,7 @@ public class Player {
         return name;
     }
 
+    public ArrayList<String> getHand() {
+        return hand;
+    }
 }
