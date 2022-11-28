@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Player {
     private Principal user;
     private String name;
-    private ArrayList<Card> hand;
+    private ArrayList<String> hand;
 
     public Player(Principal user, String name){
         this.user = user;

@@ -16,7 +16,7 @@ class Crazy8GameTest {
     void generateDeck() {
         game = new Crazy8Game(null);
 
-        ArrayList<Card> cards = game.getDeck();
+        ArrayList<String> cards = game.getDeck();
         ArrayList<String> cardAsString = new ArrayList<>();
         for(int i = 0; i < cards.size(); i++){
             cardAsString.add(cards.get(i).toString());

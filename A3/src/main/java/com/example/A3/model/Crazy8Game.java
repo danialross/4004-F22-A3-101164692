@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Crazy8Game {
-    private ArrayList<Card> deck = new ArrayList<>();
+    private ArrayList<String> deck = new ArrayList<>();
     private ArrayList<String> players;
-    private Card currentTopCard;
+    private String currentTopCard;
     private int currPlayerIndex = 0;
     private int direction = 1;
 
@@ -23,13 +23,19 @@ public class Crazy8Game {
 
         for(int j = 0; j < 13; j++){
             for(int i = 0; i < 4; i++){
-                Card c = new Card(suit[i],rank[j]);
+                String c = rank[j]+suit[i];
                 this.deck.add(c);
             }
         }
     }
+//
+//    public Card drawCard(Card rigCard){
+//        if( deck.contains(rigCard)){
+//            deck.remove(rigCard)
+//        }
+//    }
 
-    public Card getCurrentTopCard() {
+    public String getCurrentTopCard() {
         return currentTopCard;
     }
 
@@ -37,7 +43,7 @@ public class Crazy8Game {
         return players.get(currPlayerIndex);
     }
 
-    public ArrayList<Card> getDeck() {
+    public ArrayList<String> getDeck() {
         return deck;
     }
 }
