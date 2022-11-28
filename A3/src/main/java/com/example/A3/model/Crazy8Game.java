@@ -18,7 +18,15 @@ public class Crazy8Game {
     }
 
     public void generateDeck(){
-        
+        String[] suit = {"D","C","H","S"};
+        String[] rank = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+
+        for(int j = 0; j < 13; j++){
+            for(int i = 0; i < 4; i++){
+                Card c = new Card(suit[i],rank[j]);
+                this.deck.add(c);
+            }
+        }
     }
 
     public Card getCurrentTopCard() {
