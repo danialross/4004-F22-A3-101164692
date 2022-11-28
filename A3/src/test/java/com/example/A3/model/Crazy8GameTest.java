@@ -56,10 +56,10 @@ class Crazy8GameTest {
         game = new Crazy8Game(players);
 
         game.playerDrawCard(game.getPlayers().get(0),null);
-        assertEquals(1,game.getPlayers().get(0));
+        assertEquals(1,game.getPlayers().get(0).getHand().size());
 
         game.playerDrawCard(game.getPlayers().get(1),"KS");
-        assertEquals(1,game.getPlayers().get(0));
-        assertEquals("KS",game.getPlayers().get(0).getHand().get(0));
+        assertEquals(1,game.getPlayers().get(1).getHand().size());
+        assertEquals("KS",game.getPlayers().get(1).getHand().get(0));
     }
 }
