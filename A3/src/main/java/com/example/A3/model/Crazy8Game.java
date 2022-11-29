@@ -129,7 +129,12 @@ public class Crazy8Game {
     }
 
     public String requestAction(int option){
-        return "";
+        if(option == 1){
+            return "Select a new suit.(D/C/H/S)";
+        }else{
+            //only prompt is user has a 2 card to play
+            return "A 2 was played. Either play a 2 card or draw 2.(Index of a 2 card/-1)";
+        }
     }
 
     public String turnStarts(){
