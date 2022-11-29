@@ -105,6 +105,11 @@ public class Crazy8Game {
         }
     }
 
+// returns message to notify players
+    public String notifyAction(int option){
+        return "";
+    }
+
     public String getCurrentTopCard() {
         return currentTopCard;
     }
@@ -131,5 +136,9 @@ public class Crazy8Game {
 
     public void setCurrPlayerIndex(int currPlayerIndex) {
         this.currPlayerIndex = currPlayerIndex;
+    }
+
+    public void setCurrentTopCard(String currentTopCard) {
+        this.currentTopCard = currentTopCard;
     }
 }

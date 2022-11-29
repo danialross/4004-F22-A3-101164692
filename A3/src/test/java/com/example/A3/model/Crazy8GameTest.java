@@ -159,4 +159,18 @@ class Crazy8GameTest {
         game.setDirection(-1);
         assertEquals("Left",game.showDirection());
     }
+
+    @Test
+    void notifyAction() {
+        players.add(new Player(null,"p1"));
+        players.add(new Player(null,"p2"));
+        players.add(new Player(null,"p3"));
+        players.add(new Player(null,"p4"));
+        game = new Crazy8Game(null);
+        // 1 = roundFinished
+        // 2 = Ace played
+        assertEquals("an Ace was played, the direction has been reversed",game.notifyAction(2));
+        // 3 = Q played
+        assertEquals("an Queen was played, the next player's turn has been skipped",game.notifyAction(3));
+    }
 }
