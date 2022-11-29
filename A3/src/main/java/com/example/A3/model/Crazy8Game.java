@@ -98,7 +98,11 @@ public class Crazy8Game {
 
     // return current direction as left or right
     public String showDirection(){
-        return "";
+        if(direction==1){
+            return "Right";
+        }else{
+            return "Left";
+        }
     }
 
     public String getCurrentTopCard() {
