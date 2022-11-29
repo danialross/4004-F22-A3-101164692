@@ -62,7 +62,7 @@ public class Crazy8Game {
     }
     //used to show the card player just drew
     public String showLastCard(Player p){
-        return "";
+        return p.getHand().get(p.getHand().size()-1) + " was drew";
     }
 
     public void dealPlayerCards(){
