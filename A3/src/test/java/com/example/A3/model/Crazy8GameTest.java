@@ -187,4 +187,13 @@ class Crazy8GameTest {
         assertEquals("3H was drew",game.showLastCard(players.get(0)));
 
     }
+
+    @Test
+    void changeSuit() {
+        game = new Crazy8Game(players);
+        game.setCurrentTopCard("8S");
+        game.changeSuit("H");
+        assertEquals("8H",game.getCurrentTopCard());
+
+    }
 }

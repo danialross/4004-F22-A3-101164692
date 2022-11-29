@@ -121,6 +121,10 @@ public class Crazy8Game {
 
         return message;
     }
+    //8 card was played
+    public void changeSuit(String s){
+        
+    }
 
     public String turnStarts(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
