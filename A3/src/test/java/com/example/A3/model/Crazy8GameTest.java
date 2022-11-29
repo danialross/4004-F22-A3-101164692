@@ -174,4 +174,12 @@ class Crazy8GameTest {
         assertEquals("8H",game.getCurrentTopCard());
 
     }
+
+    @Test
+    void requestAction() {
+        //ask for suit = played 8
+        assertEquals("Select a new suit.(D/C/H/S)" ,game.requestAction(1));
+        //play 2 or add 2 = played 2
+        assertEquals("A 2 was played. Either play a 2 card or draw 2.(Index of a 2 card/-1)" ,game.requestAction(2));
+    }
 }

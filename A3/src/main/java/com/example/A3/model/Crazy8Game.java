@@ -128,6 +128,10 @@ public class Crazy8Game {
         currentTopCard = currentTopCard.charAt(0)+s;
     }
 
+    public String requestAction(int option){
+        return "";
+    }
+
     public String turnStarts(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
     }
