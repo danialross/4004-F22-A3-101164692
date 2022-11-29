@@ -115,8 +115,10 @@ public class Crazy8Game {
             message = "";
         }else if( option == 2){
             message = "an Ace was played, the direction has been reversed";
-        }else{
+        }else if( option == 3){
             message = "a Queen was played, the next player's turn has been skipped";
+        }else{
+            message = "The suit has changed to " + currentTopCard.charAt(1) + " because an 8 was played";
         }
 
         return message;
