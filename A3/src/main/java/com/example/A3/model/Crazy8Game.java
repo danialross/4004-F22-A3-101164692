@@ -122,12 +122,16 @@ public class Crazy8Game {
         return message;
     }
 
+    public String turnStarts(){
+        return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
+    }
+
     public String getCurrentTopCard() {
         return currentTopCard;
     }
 
     public String getCurrentPlayerTurn(){
-        return players.get(currPlayerIndex).getName() + "'s turn";
+        return players.get(currPlayerIndex).getName();
     }
 
     public ArrayList<String> getDeck() {
