@@ -173,4 +173,18 @@ class Crazy8GameTest {
         // 3 = Q played
         assertEquals("a Queen was played, the next player's turn has been skipped",game.notifyAction(3));
     }
+
+    @Test
+    void showLastCard() {
+        players.add(new Player(null,"p1"));
+        players.add(new Player(null,"p2"));
+        players.add(new Player(null,"p3"));
+        players.add(new Player(null,"p4"));
+        game = new Crazy8Game(players);
+        ArrayList<String> hand = new ArrayList<>();
+        hand.add("3H");
+        game.getPlayers().get(0).setHand(hand);
+        assertEquals("3H was drew",game.showLastCard(players.get(0)));
+
+    }
 }

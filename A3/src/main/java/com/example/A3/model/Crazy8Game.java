@@ -59,7 +59,10 @@ public class Crazy8Game {
             newHand.add(drawCard(null));
         }
         p.setHand(newHand);
-
+    }
+    //used to show the card player just drew
+    public String showLastCard(Player p){
+        return "";
     }
 
     public void dealPlayerCards(){
