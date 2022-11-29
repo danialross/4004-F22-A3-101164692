@@ -85,12 +85,12 @@ public class Crazy8Game {
 
     public void getNextPlayer() {
         if (direction == 1) {
-            currPlayerIndex+=2;
+            currPlayerIndex++;
             if (currPlayerIndex > 3) {
                 currPlayerIndex -= 4;
             }
         } else {
-            currPlayerIndex-=2;
+            currPlayerIndex--;
             if (currPlayerIndex < 0) {
                 currPlayerIndex += 4;
             }
