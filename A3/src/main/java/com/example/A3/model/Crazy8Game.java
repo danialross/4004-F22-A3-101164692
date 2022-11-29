@@ -8,7 +8,6 @@ public class Crazy8Game {
     private ArrayList<String> deck = new ArrayList<>();
     private ArrayList<Player> players;
     private String currentTopCard;
-    private String specialCardPlayed;
     private int currPlayerIndex = 0;
     private int direction = 1;
 
@@ -72,7 +71,25 @@ public class Crazy8Game {
     }
 
     public void playCard(String card){
-        return;
+        if(card.equals("AD") || card.equals("AC") || card.equals("AH") || card.equals("AS")){
+            direction = -direction;
+        }else if(card.equals("QD") || card.equals("QC") || card.equals("QH") || card.equals("QS")) {
+            if (direction == 1) {
+                currPlayerIndex += 2;
+                if (currPlayerIndex > 3) {
+                    currPlayerIndex -= 4;
+                }
+            } else {
+                currPlayerIndex -= 2;
+                if (currPlayerIndex < 0) {
+                    currPlayerIndex += 4;
+                }
+            }
+        }
+
+        currentTopCard = card;
+
+
     }
     public String getCurrentTopCard() {
         return currentTopCard;
@@ -94,7 +111,11 @@ public class Crazy8Game {
         return direction;
     }
 
-    public String getSpecialCardPlayed() {
-        return specialCardPlayed;
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public void setCurrPlayerIndex(int currPlayerIndex) {
+        this.currPlayerIndex = currPlayerIndex;
     }
 }
