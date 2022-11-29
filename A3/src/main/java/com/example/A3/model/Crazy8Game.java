@@ -74,23 +74,29 @@ public class Crazy8Game {
         if(card.equals("AD") || card.equals("AC") || card.equals("AH") || card.equals("AS")){
             direction = -direction;
         }else if(card.equals("QD") || card.equals("QC") || card.equals("QH") || card.equals("QS")) {
-            if (direction == 1) {
-                currPlayerIndex += 2;
-                if (currPlayerIndex > 3) {
-                    currPlayerIndex -= 4;
-                }
-            } else {
-                currPlayerIndex -= 2;
-                if (currPlayerIndex < 0) {
-                    currPlayerIndex += 4;
-                }
-            }
+            getNextPlayer();
+
         }
 
         currentTopCard = card;
 
 
     }
+
+    public void getNextPlayer() {
+        if (direction == 1) {
+            currPlayerIndex+=2;
+            if (currPlayerIndex > 3) {
+                currPlayerIndex -= 4;
+            }
+        } else {
+            currPlayerIndex-=2;
+            if (currPlayerIndex < 0) {
+                currPlayerIndex += 4;
+            }
+        }
+    }
+
     public String getCurrentTopCard() {
         return currentTopCard;
     }
