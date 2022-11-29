@@ -1,22 +1,25 @@
 package com.example.A3.model;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class Crazy8GameTest {
-    Crazy8Game game;
-    ArrayList<Player> players = new ArrayList<>();
+
+    ArrayList<Player> players = new ArrayList<>(Arrays.asList(
+            new Player(null,"p1"),
+            new Player(null,"p2"),
+            new Player(null,"p3"),
+            new Player(null,"p4")));
+    Crazy8Game game = new Crazy8Game(players);
 
     @Test
     void generateDeck() {
-        game = new Crazy8Game(null);
         ArrayList<String> cards = game.getDeck();
-
         String[] deck = {
                 "AD", "AC", "AH", "AS",
                 "2D", "2C", "2H", "2S",
@@ -41,7 +44,6 @@ class Crazy8GameTest {
 
     @Test
     void drawCard() {
-        game = new Crazy8Game(null);
         ArrayList<String> cards = game.getDeck();
 
         assertEquals("AC",game.drawCard("AC"));
@@ -50,11 +52,6 @@ class Crazy8GameTest {
 
     @Test
     void playerDrawCard() {
-        players.add(new Player(null,"p1"));
-        players.add(new Player(null,"p2"));
-        players.add(new Player(null,"p3"));
-        players.add(new Player(null,"p4"));
-        game = new Crazy8Game(players);
 
         game.playerDrawCard(game.getPlayers().get(0),null);
         assertEquals(1,game.getPlayers().get(0).getHand().size());
@@ -67,11 +64,6 @@ class Crazy8GameTest {
     @Test
     void dealPlayerCards() {
 
-        players.add(new Player(null,"p1"));
-        players.add(new Player(null,"p2"));
-        players.add(new Player(null,"p3"));
-        players.add(new Player(null,"p4"));
-        game = new Crazy8Game(players);
         game.dealPlayerCards();
         for(int i = 0;i< players.size();i++){
             assertEquals(5,players.get(i).getHand().size());
@@ -81,11 +73,7 @@ class Crazy8GameTest {
 
     @Test
     void playCard() {
-        players.add(new Player(null,"p1"));
-        players.add(new Player(null,"p2"));
-        players.add(new Player(null,"p3"));
-        players.add(new Player(null,"p4"));
-        game = new Crazy8Game(players);
+
         game.playCard("5S");
         assertEquals("5S",game.getCurrentTopCard());
 
@@ -132,11 +120,7 @@ class Crazy8GameTest {
 
     @Test
     void getNextPlayer() {
-        players.add(new Player(null,"p1"));
-        players.add(new Player(null,"p2"));
-        players.add(new Player(null,"p3"));
-        players.add(new Player(null,"p4"));
-        game = new Crazy8Game(players);
+
         game.getNextPlayer();
         assertEquals(players.get(1).getName(),game.getCurrentPlayerTurn());
 
@@ -154,7 +138,6 @@ class Crazy8GameTest {
 
     @Test
     void showDirection() {
-        game = new Crazy8Game(null);
         assertEquals("Right",game.showDirection());
         game.setDirection(-1);
         assertEquals("Left",game.showDirection());
@@ -162,11 +145,7 @@ class Crazy8GameTest {
 
     @Test
     void notifyAction() {
-        players.add(new Player(null,"p1"));
-        players.add(new Player(null,"p2"));
-        players.add(new Player(null,"p3"));
-        players.add(new Player(null,"p4"));
-        game = new Crazy8Game(null);
+
         // 1 = roundFinished
         // 2 = Ace played
         assertEquals("an Ace was played, the direction has been reversed",game.notifyAction(2));
@@ -180,11 +159,7 @@ class Crazy8GameTest {
 
     @Test
     void showLastCard() {
-        players.add(new Player(null,"p1"));
-        players.add(new Player(null,"p2"));
-        players.add(new Player(null,"p3"));
-        players.add(new Player(null,"p4"));
-        game = new Crazy8Game(players);
+
         ArrayList<String> hand = new ArrayList<>();
         hand.add("3H");
         game.getPlayers().get(0).setHand(hand);
@@ -194,7 +169,6 @@ class Crazy8GameTest {
 
     @Test
     void changeSuit() {
-        game = new Crazy8Game(players);
         game.setCurrentTopCard("8S");
         game.changeSuit("H");
         assertEquals("8H",game.getCurrentTopCard());
