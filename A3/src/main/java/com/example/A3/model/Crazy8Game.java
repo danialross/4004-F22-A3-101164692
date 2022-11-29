@@ -8,6 +8,7 @@ public class Crazy8Game {
     private ArrayList<String> deck = new ArrayList<>();
     private ArrayList<Player> players;
     private String currentTopCard;
+    private String specialCardPlayed;
     private int currPlayerIndex = 0;
     private int direction = 1;
 
@@ -70,6 +71,9 @@ public class Crazy8Game {
         }
     }
 
+    public void playCard(String card){
+        return;
+    }
     public String getCurrentTopCard() {
         return currentTopCard;
     }
@@ -84,5 +88,13 @@ public class Crazy8Game {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public String getSpecialCardPlayed() {
+        return specialCardPlayed;
     }
 }
