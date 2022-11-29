@@ -171,6 +171,6 @@ class Crazy8GameTest {
         // 2 = Ace played
         assertEquals("an Ace was played, the direction has been reversed",game.notifyAction(2));
         // 3 = Q played
-        assertEquals("an Queen was played, the next player's turn has been skipped",game.notifyAction(3));
+        assertEquals("a Queen was played, the next player's turn has been skipped",game.notifyAction(3));
     }
 }
