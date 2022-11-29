@@ -107,7 +107,16 @@ public class Crazy8Game {
 
 // returns message to notify players
     public String notifyAction(int option){
-        return "";
+        String message;
+        if(option == 1){
+            message = "";
+        }else if( option == 2){
+            message = "an Ace was played, the direction has been reversed";
+        }else{
+            message = "a Queen was played, the next player's turn has been skipped";
+        }
+
+        return message;
     }
 
     public String getCurrentTopCard() {
