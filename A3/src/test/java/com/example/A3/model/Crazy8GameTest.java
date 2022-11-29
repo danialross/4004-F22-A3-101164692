@@ -172,6 +172,10 @@ class Crazy8GameTest {
         assertEquals("an Ace was played, the direction has been reversed",game.notifyAction(2));
         // 3 = Q played
         assertEquals("a Queen was played, the next player's turn has been skipped",game.notifyAction(3));
+        // 4 = suit has changed
+        game.setCurrentTopCard("8S");
+        assertEquals("The suit has changed to " + game.getCurrentTopCard().charAt(1) + " because an 8 was played",game.notifyAction(4));
+
     }
 
     @Test
