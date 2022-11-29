@@ -137,6 +137,10 @@ public class Crazy8Game {
         }
     }
 
+    public boolean hasPlayableCard(Player p,String card){
+        return false;
+    }
+
     public String turnStarts(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
     }

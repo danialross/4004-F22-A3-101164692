@@ -182,4 +182,15 @@ class Crazy8GameTest {
         //play 2 or add 2 = played 2
         assertEquals("A 2 was played. Either play a 2 card or draw 2.(Index of a 2 card/-1)" ,game.requestAction(2));
     }
+
+    @Test
+    void hasPlayableCard() {
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("8S","QC")));
+        game.setCurrentTopCard("8H");
+        assertEquals(true,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        game.setCurrentTopCard("2C");
+        assertEquals(true,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        game.setCurrentTopCard("3D");
+        assertEquals(false,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+    }
 }
