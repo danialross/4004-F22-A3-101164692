@@ -127,7 +127,7 @@ public class Crazy8Game {
     }
 
     public String getCurrentPlayerTurn(){
-        return players.get(currPlayerIndex).getName();
+        return players.get(currPlayerIndex).getName() + "'s turn";
     }
 
     public ArrayList<String> getDeck() {
