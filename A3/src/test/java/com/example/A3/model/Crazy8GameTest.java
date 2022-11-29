@@ -101,6 +101,10 @@ class Crazy8GameTest {
         game = new Crazy8Game(players);
         game.playCard("AS");
         assertEquals(-1,game.getDirection());
+        game = new Crazy8Game(players);
+        game.setDirection(-1);
+        game.playCard("AS");
+        assertEquals(1,game.getDirection());
 
         //p1-p3
         game = new Crazy8Game(players);
