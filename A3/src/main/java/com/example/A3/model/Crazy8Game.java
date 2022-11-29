@@ -75,6 +75,7 @@ public class Crazy8Game {
             direction = -direction;
         }else if(card.equals("QD") || card.equals("QC") || card.equals("QH") || card.equals("QS")) {
             getNextPlayer();
+            getNextPlayer();
 
         }
 
