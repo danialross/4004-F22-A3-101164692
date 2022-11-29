@@ -138,6 +138,13 @@ public class Crazy8Game {
     }
 
     public boolean hasPlayableCard(Player p,String card){
+        for(int i = 0;i<p.getHand().size();i++){
+            if(p.getHand().get(i).charAt(0) == card.charAt(0)){
+                return true;
+            }else if(p.getHand().get(i).charAt(1) == card.charAt(1)){
+                return true;
+            }
+        }
         return false;
     }
 
