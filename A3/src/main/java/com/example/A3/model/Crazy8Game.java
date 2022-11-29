@@ -123,7 +123,7 @@ public class Crazy8Game {
     }
     //8 card was played
     public void changeSuit(String s){
-        
+        currentTopCard = currentTopCard.charAt(0)+s;
     }
 
     public String turnStarts(){
