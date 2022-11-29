@@ -78,9 +78,7 @@ public class Crazy8Game {
             getNextPlayer();
 
         }
-
         currentTopCard = card;
-
 
     }
 
@@ -96,6 +94,11 @@ public class Crazy8Game {
                 currPlayerIndex += 4;
             }
         }
+    }
+
+    // return current direction as left or right
+    public String showDirection(){
+        return "";
     }
 
     public String getCurrentTopCard() {

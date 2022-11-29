@@ -151,4 +151,12 @@ class Crazy8GameTest {
 
 
     }
+
+    @Test
+    void showDirection() {
+        game = new Crazy8Game(null);
+        assertEquals("Right",game.showDirection());
+        game.setDirection(-1);
+        assertEquals("Left",game.showDirection());
+    }
 }
