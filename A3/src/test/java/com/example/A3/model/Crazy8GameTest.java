@@ -134,9 +134,8 @@ class Crazy8GameTest {
         players.add(new Player(null,"p4"));
         game = new Crazy8Game(players);
         game.getNextPlayer();
-        assertEquals(players.get(0).getName(),game.getCurrentPlayerTurn());
+        assertEquals(players.get(1).getName(),game.getCurrentPlayerTurn());
 
-        game.getNextPlayer();
         game.getNextPlayer();
         game.getNextPlayer();
         game.getNextPlayer();
