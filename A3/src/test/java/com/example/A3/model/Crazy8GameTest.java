@@ -126,4 +126,26 @@ class Crazy8GameTest {
 
     }
 
+    @Test
+    void getNextPlayer() {
+        players.add(new Player(null,"p1"));
+        players.add(new Player(null,"p2"));
+        players.add(new Player(null,"p3"));
+        players.add(new Player(null,"p4"));
+        game = new Crazy8Game(players);
+        game.getNextPlayer();
+        assertEquals(players.get(0).getName(),game.getCurrentPlayerTurn());
+
+        game.getNextPlayer();
+        game.getNextPlayer();
+        game.getNextPlayer();
+        game.getNextPlayer();
+        assertEquals(players.get(0).getName(),game.getCurrentPlayerTurn());
+
+        game.setDirection(-1);
+        game.getNextPlayer();
+        assertEquals(players.get(3).getName(),game.getCurrentPlayerTurn());
+
+
+    }
 }
