@@ -81,61 +81,49 @@ class Crazy8GameTest {
 
     @Test
     void playCard() {
-
-        game = new Crazy8Game(null);
+        players.add(new Player(null,"p1"));
+        players.add(new Player(null,"p2"));
+        players.add(new Player(null,"p3"));
+        players.add(new Player(null,"p4"));
+        game = new Crazy8Game(players);
         game.playCard("5S");
         assertEquals("5S",game.getCurrentTopCard());
 
-        game = new Crazy8Game(null);
+        game = new Crazy8Game(players);
         game.playCard("AD");
         assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(null);
+        game = new Crazy8Game(players);
         game.playCard("AC");
         assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(null);
+        game = new Crazy8Game(players);
         game.playCard("AH");
         assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(null);
+        game = new Crazy8Game(players);
         game.playCard("AS");
-
         assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(null);
-        game.playCard("2D");
-        assertEquals("2D",game.getSpecialCardPlayed());
-        game.playCard("2C");
-        assertEquals("2C",game.getSpecialCardPlayed());
-        game = new Crazy8Game(null);
-        game.playCard("2H");
-        assertEquals("2H",game.getSpecialCardPlayed());
-        game = new Crazy8Game(null);
-        game.playCard("2S");
-        assertEquals("2S",game.getSpecialCardPlayed());
 
-        game = new Crazy8Game(null);
-        game.playCard("8D");
-        assertEquals("8D",game.getSpecialCardPlayed());
-        game = new Crazy8Game(null);
-        game.playCard("8C");
-        assertEquals("8C",game.getSpecialCardPlayed());
-        game = new Crazy8Game(null);
-        game.playCard("8H");
-        assertEquals("8H",game.getSpecialCardPlayed());
-        game = new Crazy8Game(null);
-        game.playCard("8S");
-        assertEquals("8S",game.getSpecialCardPlayed());
-
-        game = new Crazy8Game(null);
+        //p1-p3
+        game = new Crazy8Game(players);
         game.playCard("QD");
         assertEquals("p3",game.getCurrentPlayerTurn());
-        game = new Crazy8Game(null);
+        //p3-p1
+        game = new Crazy8Game(players);
+        game.setCurrPlayerIndex(2);
         game.playCard("QC");
-        assertEquals("p3",game.getCurrentPlayerTurn());
-        game = new Crazy8Game(null);
+        assertEquals("p1",game.getCurrentPlayerTurn());
+        //p3-p1
+        game = new Crazy8Game(players);
+        game.setDirection(-1);
+        game.setCurrPlayerIndex(2);
         game.playCard("QH");
-        assertEquals("p3",game.getCurrentPlayerTurn());
-        game = new Crazy8Game(null);
+        assertEquals("p1",game.getCurrentPlayerTurn());
+        //p4-p2
+        game = new Crazy8Game(players);
+        game.setDirection(-1);
+        game.setCurrPlayerIndex(1);
         game.playCard("QS");
-        assertEquals("p3",game.getCurrentPlayerTurn());
+        assertEquals("p4",game.getCurrentPlayerTurn());
+
     }
 
 }
