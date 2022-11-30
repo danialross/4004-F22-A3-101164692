@@ -177,7 +177,10 @@ public class Crazy8Game {
     }
 
     public boolean isDrawDeckEmpty(){
-    return true;
+        if(deck.size()==0){
+            return true;
+        }
+        return false;
     }
 
 
