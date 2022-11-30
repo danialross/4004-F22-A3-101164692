@@ -187,13 +187,18 @@ class Crazy8GameTest {
 
     @Test
     void hasPlayableCard() {
-        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("8S","QC")));
-        game.setCurrentTopCard("8H");
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("7S","QC")));
+        game.setCurrentTopCard("7H");
         assertEquals(true,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
         game.setCurrentTopCard("2C");
         assertEquals(true,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("8S","QC")));
+        game.setCurrentTopCard("3D");
+        assertEquals(true,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("QC")));
         game.setCurrentTopCard("3D");
         assertEquals(false,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+
     }
 
     @Test
