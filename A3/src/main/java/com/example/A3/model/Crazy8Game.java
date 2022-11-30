@@ -46,7 +46,11 @@ public class Crazy8Game {
 
     // dealer draws a card and places in topcard
     public void dealerDrawCard(String riggedCard){
-
+        if(riggedCard != null){
+            currentTopCard = drawCard(riggedCard);
+        }else{
+            currentTopCard = drawCard(null);
+        }
     }
 
     //player draws a card and places in hand
