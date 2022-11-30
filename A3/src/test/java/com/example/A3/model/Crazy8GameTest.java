@@ -358,4 +358,20 @@ class Crazy8GameTest {
         game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("3S")));
         assertTrue(game.isRoundUnplayable());
     }
+
+    @Test
+    void didFinishRound() {
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3S,7H")));
+        game.getPlayers().get(1).setHand(new ArrayList<>());
+        game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H,3C,9S")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("3H")));
+        assertTrue(game.didFinishRound());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3S,7H")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(Arrays.asList("AS")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H,3C,9S")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("3H")));
+        assertFalse(game.didFinishRound());
+
+    }
 }

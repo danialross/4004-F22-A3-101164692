@@ -203,6 +203,9 @@ public class Crazy8Game {
         }
         return false;
     }
+    public Boolean didFinishRound(){
+        return false;
+    }
 
     public Player getWinner(){
         Player currentLowestScore = players.get(0);
