@@ -158,6 +158,10 @@ public class Crazy8Game {
         return false;
     }
 
+    public boolean isRoundUnplayable(){
+        return false;
+    }
+
     public void calculateHand(Player p){
         int total = 0;
         for(int i = 0; i<p.getHand().size(); i++){

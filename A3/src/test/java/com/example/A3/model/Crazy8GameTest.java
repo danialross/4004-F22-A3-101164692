@@ -1,4 +1,4 @@
-package com.example.A3;
+package com.example.A3.model;
 
 import com.example.A3.model.Crazy8Game;
 import com.example.A3.model.Player;
@@ -309,5 +309,47 @@ class Crazy8GameTest {
         game.getPlayers().get(2).setScore(1);
         assertEquals(game.getPlayers().get(0),game.getWinner());
 
+    }
+
+    @Test
+    void isRoundUnplayable() {
+        //able to draw a card
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3S")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(Arrays.asList("4D")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("3S")));
+        assertFalse(game.isRoundUnplayable());
+
+        //p2 able to play card match suit
+        game.setDeck(new ArrayList<>());
+        game.setCurrentTopCard("9D");
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3S")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(Arrays.asList("4D")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("3S")));
+        assertFalse(game.isRoundUnplayable());
+
+        //p4 able to play card crazy 8
+        game.setCurrentTopCard("AD");
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3S")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(Arrays.asList("4C")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("8S")));
+        assertFalse(game.isRoundUnplayable());
+
+        //p1 able to play card match rank
+        game.setCurrentTopCard("AD");
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("AS")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(Arrays.asList("4C")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("8S")));
+        assertFalse(game.isRoundUnplayable());
+
+        game.setCurrentTopCard("JD");
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3S")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(Arrays.asList("4C")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(Arrays.asList("3S")));
+        assertTrue(game.isRoundUnplayable());
     }
 }

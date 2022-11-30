@@ -1,5 +1,5 @@
 
-package com.example.A3;
+package com.example.A3.model;
 
 import org.junit.runner.RunWith;
 
