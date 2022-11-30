@@ -282,4 +282,16 @@ class Crazy8GameTest {
         assertTrue(game.isDrawDeckEmpty());
 
     }
+
+    @Test
+    void didReachWinningThreshold() {
+        assertFalse(game.didReachWinningThreshold());
+        game.getPlayers().get(0).setScore(99);
+        assertFalse(game.didReachWinningThreshold());
+        game.getPlayers().get(0).setScore(100);
+        assertTrue(game.didReachWinningThreshold());
+        game.getPlayers().get(0).setScore(101);
+        assertTrue(game.didReachWinningThreshold());
+
+    }
 }

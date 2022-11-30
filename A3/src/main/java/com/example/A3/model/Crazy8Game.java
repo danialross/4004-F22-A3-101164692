@@ -183,6 +183,10 @@ public class Crazy8Game {
         return false;
     }
 
+    public boolean didReachWinningThreshold(){
+        return false;
+    }
+
 
     public String turnStarts(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
