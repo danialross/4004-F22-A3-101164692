@@ -6,11 +6,11 @@ import java.util.Collections;
 
 public class Crazy8Game {
     private ArrayList<String> deck = new ArrayList<>();
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     private String currentTopCard;
     private int currPlayerIndex = 0;
     private int direction = 1;
-    private int winningThreshold = 100;
+    private final int winningThreshold = 100;
 
     public Crazy8Game(ArrayList<Player> players){
         this.players = players;
@@ -178,10 +178,7 @@ public class Crazy8Game {
     }
 
     public boolean isDrawDeckEmpty(){
-        if(deck.size()==0){
-            return true;
-        }
-        return false;
+        return deck.size() == 0;
     }
 
     public boolean didReachWinningThreshold(){
