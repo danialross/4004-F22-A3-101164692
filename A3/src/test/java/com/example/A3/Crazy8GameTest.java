@@ -1,5 +1,7 @@
-package com.example.A3.model;
+package com.example.A3;
 
+import com.example.A3.model.Crazy8Game;
+import com.example.A3.model.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -306,6 +308,6 @@ class Crazy8GameTest {
         game.getPlayers().get(1).setScore(102);
         game.getPlayers().get(2).setScore(1);
         assertEquals(game.getPlayers().get(0),game.getWinner());
-        
+
     }
 }
