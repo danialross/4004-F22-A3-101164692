@@ -191,7 +191,13 @@ public class Crazy8Game {
     }
 
     public Player getWinner(){
-        return null;
+        Player currentLowestScore = players.get(0);
+        for(int i = 1; i<players.size();i++){
+            if(players.get(i).getScore()<currentLowestScore.getScore()){
+                currentLowestScore = players.get(i);
+            }
+        }
+        return currentLowestScore;
     }
 
 
