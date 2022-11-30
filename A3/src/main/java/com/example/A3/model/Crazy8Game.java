@@ -159,7 +159,15 @@ public class Crazy8Game {
     }
 
     public boolean isRoundUnplayable(){
-        return false;
+        for(int i = 0;i<players.size();i++){
+            if(hasPlayableCard(players.get(i),currentTopCard)){
+                return false;
+            }
+        }
+        if(deck.size()>0) {
+            return false;
+        }
+        return true;
     }
 
     public void calculateHand(Player p){
