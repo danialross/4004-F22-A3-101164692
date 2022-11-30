@@ -44,6 +44,11 @@ public class Crazy8Game {
         }
     }
 
+    // dealer draws a card and places in topcard
+    public void dealerDrawCard(String riggedCard){
+
+    }
+
     //player draws a card and places in hand
     public void playerDrawCard(Player p,String riggedCard){
 

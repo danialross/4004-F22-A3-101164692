@@ -265,4 +265,13 @@ class Crazy8GameTest {
         assertEquals(127,game.getPlayers().get(0).getScore());
         game.getPlayers().get(0).setScore(0);
     }
+
+    @Test
+    void dealerDrawCard() {
+        game.dealerDrawCard(null);
+        assertTrue(game.getCurrentTopCard()!=null);
+        game.dealerDrawCard("7D");
+        assertEquals("7D",game.getCurrentTopCard());
+
+    }
 }
