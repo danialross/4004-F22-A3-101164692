@@ -314,6 +314,7 @@ class Crazy8GameTest {
     @Test
     void isRoundUnplayable() {
         //able to draw a card
+        game.setCurrentTopCard("9C");
         game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3S")));
         game.getPlayers().get(1).setHand(new ArrayList<>(Arrays.asList("4D")));
         game.getPlayers().get(2).setHand(new ArrayList<>(Arrays.asList("7H")));
