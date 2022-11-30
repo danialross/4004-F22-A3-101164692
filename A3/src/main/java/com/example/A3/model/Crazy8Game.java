@@ -149,7 +149,22 @@ public class Crazy8Game {
     }
 
     public void calculateHand(Player p){
-
+        int total = 0;
+        for(int i = 0; i<p.getHand().size(); i++){
+            if(p.getHand().get(i).charAt(0) == 'A'){
+                total += 1;
+            }else if(p.getHand().get(i).charAt(0) == '8'){
+                total += 50;
+            }else if(p.getHand().get(i).charAt(0) == '1' ||
+                    p.getHand().get(i).charAt(0) == 'J' ||
+                    p.getHand().get(i).charAt(0) == 'Q' ||
+                    p.getHand().get(i).charAt(0) == 'K'){
+                total += 10;
+            }else{
+                    total += Integer.parseInt(String.valueOf(p.getHand().get(i).charAt(0)));
+                }
+            }
+        p.setScore(p.getScore()+total);
     }
 
 
