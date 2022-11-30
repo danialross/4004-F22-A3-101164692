@@ -190,6 +190,10 @@ public class Crazy8Game {
         return false;
     }
 
+    public Player getWinner(){
+        return null;
+    }
+
 
     public String turnStarts(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";

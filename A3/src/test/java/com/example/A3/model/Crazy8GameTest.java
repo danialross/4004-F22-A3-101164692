@@ -294,4 +294,18 @@ class Crazy8GameTest {
         assertTrue(game.didReachWinningThreshold());
 
     }
+
+    @Test
+    void getWinner() {
+        game.getPlayers().get(0).setScore(102);
+        game.getPlayers().get(1).setScore(1);
+        game.getPlayers().get(2).setScore(23);
+        game.getPlayers().get(3).setScore(46);
+        assertEquals(game.getPlayers().get(1),game.getWinner());
+        game.getPlayers().get(0).setScore(1);
+        game.getPlayers().get(1).setScore(102);
+        game.getPlayers().get(2).setScore(1);
+        assertEquals(game.getPlayers().get(0),game.getWinner());
+        
+    }
 }
