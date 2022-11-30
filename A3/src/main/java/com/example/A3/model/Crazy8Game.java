@@ -204,6 +204,11 @@ public class Crazy8Game {
         return false;
     }
     public Boolean didFinishRound(){
+        for(int i = 0;i<players.size();i++){
+            if(players.get(i).getHand().size()==0){
+                return true;
+            }
+        }
         return false;
     }
 
