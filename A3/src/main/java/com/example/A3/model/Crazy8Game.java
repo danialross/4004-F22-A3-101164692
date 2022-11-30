@@ -18,7 +18,7 @@ public class Crazy8Game {
         Collections.shuffle(deck);
     }
 
-    // when card is taken from draw deck and place in the middle
+    // when card is taken from draw deck
     public String drawCard(String riggedCard){
 
         if(riggedCard != null){
