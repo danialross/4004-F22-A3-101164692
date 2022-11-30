@@ -10,6 +10,7 @@ public class Crazy8Game {
     private String currentTopCard;
     private int currPlayerIndex = 0;
     private int direction = 1;
+    private int winningThreshold = 100;
 
     public Crazy8Game(ArrayList<Player> players){
         this.players = players;
@@ -184,6 +185,11 @@ public class Crazy8Game {
     }
 
     public boolean didReachWinningThreshold(){
+        for(int i = 0;i<players.size();i++){
+            if(players.get(i).getScore() >= 100){
+                return true;
+            }
+        }
         return false;
     }
 
