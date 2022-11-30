@@ -148,6 +148,11 @@ public class Crazy8Game {
         return false;
     }
 
+    public void calculateHand(Player p){
+
+    }
+
+
     public String turnStarts(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
     }

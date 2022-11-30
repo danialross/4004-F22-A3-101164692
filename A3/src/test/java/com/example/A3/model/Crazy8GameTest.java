@@ -193,4 +193,64 @@ class Crazy8GameTest {
         game.setCurrentTopCard("3D");
         assertEquals(false,game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
     }
+
+    @Test
+    void calculateHand() {
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("AD")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(1,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("2D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(2,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("3D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(3,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("4D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(4,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("5D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(5,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("6D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(6,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("7D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(7,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("8D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(50,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("9D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(9,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("10D")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(10,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("JD")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(10,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("QD")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(10,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("KD")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(10,game.getPlayers().get(0).getScore());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("AD","2D","3D","4D","5D","6D","7D","8D","9D","10D","JD","QD","KD")));
+        game.calculateHand(game.getPlayers().get(0));
+        assertEquals(127,game.getPlayers().get(0).getScore());
+
+    }
 }
