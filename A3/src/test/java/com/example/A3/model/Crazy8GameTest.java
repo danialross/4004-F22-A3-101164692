@@ -45,7 +45,7 @@ class Crazy8GameTest {
     @Test
     void drawCard() {
         ArrayList<String> cards = game.getDeck();
-
+        assertTrue(game.drawCard(null)!=null);
         assertEquals("AC",game.drawCard("AC"));
         assertEquals(null,game.drawCard("AX"));
     }
