@@ -7,6 +7,6 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;
 
 @RunWith(JUnitPlatform.class)
-@SelectPackages(value = {"org.example"})
+@SelectPackages(value = {"com.example.A3.model"})
 public class TestSuite {
 }
