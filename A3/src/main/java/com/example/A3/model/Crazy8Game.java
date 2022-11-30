@@ -176,6 +176,10 @@ public class Crazy8Game {
         p.setScore(p.getScore()+total);
     }
 
+    public boolean isDrawDeckEmpty(){
+    return true;
+    }
+
 
     public String turnStarts(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
@@ -191,6 +195,10 @@ public class Crazy8Game {
 
     public ArrayList<String> getDeck() {
         return deck;
+    }
+
+    public void setDeck(ArrayList<String> deck) {
+        this.deck = deck;
     }
 
     public ArrayList<Player> getPlayers() {

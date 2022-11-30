@@ -274,4 +274,12 @@ class Crazy8GameTest {
         assertEquals("7D",game.getCurrentTopCard());
 
     }
+
+    @Test
+    void isDrawDeckEmpty() {
+        assertFalse(game.isDrawDeckEmpty());
+        game.setDeck(new ArrayList<>());
+        assertTrue(game.isDrawDeckEmpty());
+
+    }
 }
