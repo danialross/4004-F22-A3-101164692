@@ -107,6 +107,7 @@ public class Crazy8Game {
 
 
         }
+        getNextPlayer();
 
     }
 
@@ -283,5 +284,9 @@ public class Crazy8Game {
 
     public void setCurrentTopCard(String currentTopCard) {
         this.currentTopCard = currentTopCard;
+    }
+
+    public int getCurrPlayerIndex() {
+        return currPlayerIndex;
     }
 }
