@@ -1,10 +1,6 @@
 package com.example.A3.model;
 
-import com.example.A3.model.Crazy8Game;
-import com.example.A3.model.Player;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
