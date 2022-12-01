@@ -13,6 +13,7 @@ public class Player {
         this.user = user;
         this.name = name;
         score = 0;
+        hand = new ArrayList<>();
     }
 
     public Principal getUser() {
