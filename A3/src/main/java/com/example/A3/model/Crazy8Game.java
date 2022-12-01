@@ -76,9 +76,9 @@ public class Crazy8Game {
     }
 
     public void dealPlayerCards(){
-        for(int i = 0;i<players.size();i++){
-            for(int j = 0;j<5;j++){
-                playerDrawCard(players.get(i),null);
+        for (Player player : players) {
+            for (int j = 0; j < 5; j++) {
+                playerDrawCard(player, null);
             }
         }
     }
@@ -188,8 +188,8 @@ public class Crazy8Game {
     }
 
     public boolean isRoundUnplayable(){
-        for(int i = 0;i<players.size();i++){
-            if(hasPlayableCard(players.get(i),currentTopCard)){
+        for (Player player : players) {
+            if (hasPlayableCard(player, currentTopCard)) {
                 return false;
             }
         }
@@ -223,16 +223,16 @@ public class Crazy8Game {
     }
 
     public boolean didReachWinningThreshold(){
-        for(int i = 0;i<players.size();i++){
-            if(players.get(i).getScore() >= winningThreshold){
+        for (Player player : players) {
+            if (player.getScore() >= winningThreshold) {
                 return true;
             }
         }
         return false;
     }
     public Boolean didFinishRound(){
-        for(int i = 0;i<players.size();i++){
-            if(players.get(i).getHand().size()==0){
+        for (Player player : players) {
+            if (player.getHand().size() == 0) {
                 return true;
             }
         }
