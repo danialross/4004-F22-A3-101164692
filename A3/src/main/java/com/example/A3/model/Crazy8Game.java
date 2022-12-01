@@ -196,7 +196,7 @@ public class Crazy8Game {
 
     public boolean didReachWinningThreshold(){
         for(int i = 0;i<players.size();i++){
-            if(players.get(i).getScore() >= 100){
+            if(players.get(i).getScore() >= winningThreshold){
                 return true;
             }
         }
