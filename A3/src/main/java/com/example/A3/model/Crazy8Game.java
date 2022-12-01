@@ -109,7 +109,13 @@ public class Crazy8Game {
         turnFinished();
 
     }
+    // check whether player can even respond to a 2 card being played
     public boolean canRespondTo2Card(){
+        for(String card: players.get(currPlayerIndex).getHand()){
+            if(card.charAt(0) == '2'){
+                return true;
+            }
+        }
         return false;
     }
 
