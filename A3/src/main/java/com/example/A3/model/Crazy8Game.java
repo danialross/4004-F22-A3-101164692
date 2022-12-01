@@ -94,7 +94,8 @@ public class Crazy8Game {
 
     }
 
-    public void played2Card(PLayer p){
+    // player plays another 2 card after a 2 was played, so he does not +2 cards but the next player does
+    public void respondWith2Card(boolean response){
 
     }
 

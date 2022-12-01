@@ -384,4 +384,16 @@ class Crazy8GameTest {
         assertEquals(expectedString,game.showScores());
 
     }
+
+    @Test
+    void respondWith2Card() {
+        game.setCurrentTopCard("2S");
+        game.respondWith2Card(true);
+        assertEquals(0,game.getPlayers().get(0).getHand().size());
+
+        game.getNextPlayer();
+        game.respondWith2Card(false);
+        assertEquals(2,game.getPlayers().get(1).getHand().size());
+
+    }
 }
