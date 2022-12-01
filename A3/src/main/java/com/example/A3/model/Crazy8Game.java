@@ -94,6 +94,10 @@ public class Crazy8Game {
 
     }
 
+    public void played2Card(PLayer p){
+
+    }
+
     public void getNextPlayer() {
         if (direction == 1) {
             currPlayerIndex++;
