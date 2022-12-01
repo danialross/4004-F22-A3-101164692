@@ -47,6 +47,7 @@ class Crazy8GameTest {
         assertNotNull(game.drawCard(null));
         assertEquals("AC",game.drawCard("AC"));
         assertNull(game.drawCard("AX"));
+        assertFalse(cards.contains("AC"));
     }
 
     @Test
