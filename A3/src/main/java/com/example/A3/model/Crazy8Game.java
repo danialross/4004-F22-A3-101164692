@@ -222,7 +222,7 @@ public class Crazy8Game {
         return currentLowestScore;
     }
 
-    public String showFinalScores(){
+    public String showScores(){
         return "--Player scores--\n" +
                 players.get(0).getName()+" : " + players.get(0).getScore() +" Points\n" +
                 players.get(1).getName()+" : " + players.get(1).getScore() +" Points\n" +
