@@ -374,4 +374,17 @@ class Crazy8GameTest {
         assertFalse(game.didFinishRound());
 
     }
+
+
+    @Test
+    void showFinalScores() {
+        String expectedString = "--Player scores--\n" +
+                "p1 : 0 Points\n" +
+                "p2 : 0 Points\n" +
+                "p3 : 0 Points\n" +
+                "p4 : 0 Points\n";
+        System.out.print(expectedString);
+        assertEquals(expectedString,game.showFinalScores());
+
+    }
 }

@@ -222,6 +222,10 @@ public class Crazy8Game {
         return currentLowestScore;
     }
 
+    public String showFinalScores(){
+        return "";
+    }
+
     public String showCurrentPlayersTurn(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
     }
