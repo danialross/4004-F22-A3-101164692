@@ -118,18 +118,18 @@ class Crazy8GameTest {
     }
 
     @Test
-    void getNextPlayer() {
+    void turnFinished() {
 
-        game.getNextPlayer();
+        game.turnFinished();
         assertEquals(players.get(1).getName(),game.getCurrentPlayerTurn());
 
-        game.getNextPlayer();
-        game.getNextPlayer();
-        game.getNextPlayer();
+        game.turnFinished();
+        game.turnFinished();
+        game.turnFinished();
         assertEquals(players.get(0).getName(),game.getCurrentPlayerTurn());
 
         game.setDirection(-1);
-        game.getNextPlayer();
+        game.turnFinished();
         assertEquals(players.get(3).getName(),game.getCurrentPlayerTurn());
 
 

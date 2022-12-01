@@ -86,8 +86,8 @@ public class Crazy8Game {
         if(card.equals("AD") || card.equals("AC") || card.equals("AH") || card.equals("AS")){
             direction = -direction;
         }else if(card.equals("QD") || card.equals("QC") || card.equals("QH") || card.equals("QS")) {
-            getNextPlayer();
-            getNextPlayer();
+            turnFinished();
+            turnFinished();
 
         }
         currentTopCard = card;
@@ -104,14 +104,13 @@ public class Crazy8Game {
                 playerDrawCard(players.get(currPlayerIndex),null);
                 playerDrawCard(players.get(currPlayerIndex),null);
             }
-
-
         }
-        getNextPlayer();
+
+        turnFinished();
 
     }
 
-    public void getNextPlayer() {
+    public void turnFinished() {
         if (direction == 1) {
             currPlayerIndex++;
             if (currPlayerIndex > 3) {
