@@ -95,7 +95,18 @@ public class Crazy8Game {
     }
 
     // player plays another 2 card after a 2 was played, so he does not +2 cards but the next player does
-    public void respondWith2Card(boolean response){
+    public void respondWith2Card(boolean response,String[] riggedCard){
+        if(!response){
+            if(riggedCard != null){
+                playerDrawCard(players.get(currPlayerIndex),riggedCard[0]);
+                playerDrawCard(players.get(currPlayerIndex),riggedCard[1]);
+            }else{
+                playerDrawCard(players.get(currPlayerIndex),null);
+                playerDrawCard(players.get(currPlayerIndex),null);
+            }
+
+
+        }
 
     }
 
