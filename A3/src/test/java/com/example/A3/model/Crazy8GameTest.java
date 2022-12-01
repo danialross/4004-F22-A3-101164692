@@ -388,11 +388,11 @@ class Crazy8GameTest {
     @Test
     void respondWith2Card() {
         game.setCurrentTopCard("2S");
-        game.respondWith2Card(true);
+        game.respondWith2Card(true,null);
         assertEquals(0,game.getPlayers().get(0).getHand().size());
 
         game.getNextPlayer();
-        game.respondWith2Card(false);
+        game.respondWith2Card(false,null);
         assertEquals(2,game.getPlayers().get(1).getHand().size());
 
     }
