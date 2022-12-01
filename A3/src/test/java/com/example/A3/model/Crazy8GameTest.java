@@ -375,11 +375,13 @@ class Crazy8GameTest {
 
     @Test
     void showScores() {
-        String expectedString = "--Player scores--\n" +
-                "p1 : 0 Points\n" +
-                "p2 : 0 Points\n" +
-                "p3 : 0 Points\n" +
-                "p4 : 0 Points\n";
+        String expectedString = """
+                --Player scores--
+                p1 : 0 Points
+                p2 : 0 Points
+                p3 : 0 Points
+                p4 : 0 Points
+                """;
         System.out.print(expectedString);
         assertEquals(expectedString,game.showScores());
 
