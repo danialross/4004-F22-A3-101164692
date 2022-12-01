@@ -400,4 +400,13 @@ class Crazy8GameTest {
 
 
     }
+
+    @Test
+    void canRespondTo2Card() {
+        game.setCurrentTopCard("2C");
+        assertFalse(game.canRespondTo2Card());
+        
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2D")));
+        assertTrue(game.canRespondTo2Card());
+    }
 }

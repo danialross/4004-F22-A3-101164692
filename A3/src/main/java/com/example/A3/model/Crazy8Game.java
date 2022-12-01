@@ -109,6 +109,9 @@ public class Crazy8Game {
         turnFinished();
 
     }
+    public boolean canRespondTo2Card(){
+        return false;
+    }
 
     public void turnFinished() {
         if (direction == 1) {
