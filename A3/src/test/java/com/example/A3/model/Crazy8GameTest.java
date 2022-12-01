@@ -76,21 +76,12 @@ class Crazy8GameTest {
 
         game.playCard("5S");
         assertEquals("5S",game.getCurrentTopCard());
+        assertEquals(1,game.getCurrPlayerIndex());
 
         game = new Crazy8Game(players);
         game.playCard("AD");
         assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(players);
-        game.playCard("AC");
-        assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(players);
-        game.playCard("AH");
-        assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(players);
-        game.playCard("AS");
-        assertEquals(-1,game.getDirection());
-        game = new Crazy8Game(players);
-        game.setDirection(-1);
+
         game.playCard("AS");
         assertEquals(1,game.getDirection());
 
@@ -103,12 +94,12 @@ class Crazy8GameTest {
         game.setCurrPlayerIndex(2);
         game.playCard("QC");
         assertEquals("p1",game.getCurrentPlayerTurn());
-        //p3-p1
+        //p2-p4
         game = new Crazy8Game(players);
         game.setDirection(-1);
-        game.setCurrPlayerIndex(2);
+        game.setCurrPlayerIndex(1);
         game.playCard("QH");
-        assertEquals("p1",game.getCurrentPlayerTurn());
+        assertEquals("p4",game.getCurrentPlayerTurn());
         //p4-p2
         game = new Crazy8Game(players);
         game.setDirection(-1);

@@ -10,6 +10,7 @@ public class Crazy8Game {
     private int currPlayerIndex = 0;
     private int direction = 1;
     private final int winningThreshold = 100;
+    private boolean plus2Played = false;
 
     public Crazy8Game(ArrayList<Player> players){
         this.players = players;
@@ -83,14 +84,16 @@ public class Crazy8Game {
     }
 
     public void playCard(String card){
-        if(card.equals("AD") || card.equals("AC") || card.equals("AH") || card.equals("AS")){
+        if(card.charAt(0)=='A'){
             direction = -direction;
-        }else if(card.equals("QD") || card.equals("QC") || card.equals("QH") || card.equals("QS")) {
+        }else if(card.charAt(0)=='Q') {
             turnFinished();
-            turnFinished();
-
+        }else if(card.charAt(0)=='2'){
+            plus2Played = true;
         }
         currentTopCard = card;
+        turnFinished();
+
 
     }
 
