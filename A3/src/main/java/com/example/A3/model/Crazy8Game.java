@@ -223,7 +223,11 @@ public class Crazy8Game {
     }
 
     public String showFinalScores(){
-        return "";
+        return "--Player scores--\n" +
+                players.get(0).getName()+" : " + players.get(0).getScore() +" Points\n" +
+                players.get(1).getName()+" : " + players.get(1).getScore() +" Points\n" +
+                players.get(2).getName()+" : " + players.get(2).getScore() +" Points\n" +
+                players.get(3).getName()+" : " + players.get(3).getScore() +" Points\n";
     }
 
     public String showCurrentPlayersTurn(){
