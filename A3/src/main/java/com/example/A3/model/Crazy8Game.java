@@ -111,8 +111,6 @@ public class Crazy8Game {
             plus2Played = false;
         }
 
-        turnFinished();
-
     }
 
     public void turnFinished() {

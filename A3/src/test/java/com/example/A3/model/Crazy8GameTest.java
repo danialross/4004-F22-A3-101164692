@@ -413,11 +413,14 @@ class Crazy8GameTest {
         game.respondWith2Card(true,null);
         assertTrue(game.isPlus2Played());
         assertEquals(0,game.getPlayers().get(0).getHand().size());
-        assertEquals(2,game.getCurrPlayerIndex());
+        assertEquals(1,game.getCurrPlayerIndex());
+        game.turnFinished();
 
         game.respondWith2Card(false,null);
+        game.turnFinished();
         assertEquals(2,game.getPlayers().get(2).getHand().size());
         assertFalse(game.isPlus2Played());
+        assertEquals(3,game.getCurrPlayerIndex());
 
 
     }
