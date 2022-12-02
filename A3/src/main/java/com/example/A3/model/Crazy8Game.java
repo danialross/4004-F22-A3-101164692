@@ -166,7 +166,7 @@ public class Crazy8Game {
         }
     }
 
-    public boolean hasPlayableCard(Player p,String card){
+    public boolean hasPlayableCard(Player p){
         if(plus2Played){
             for(String playerCard: p.getHand()){
                 if(playerCard.charAt(0) == '2'){
@@ -177,9 +177,9 @@ public class Crazy8Game {
             for(int i = 0;i<p.getHand().size();i++){
                 if(p.getHand().get(i).charAt(0) == '8'){
                     return true;
-                }else if(p.getHand().get(i).charAt(0) == card.charAt(0)){
+                }else if(p.getHand().get(i).charAt(0) == currentTopCard.charAt(0)){
                     return true;
-                }else if(p.getHand().get(i).charAt(1) == card.charAt(1)){
+                }else if(p.getHand().get(i).charAt(1) == currentTopCard.charAt(1)){
                     return true;
                 }
             }
@@ -189,7 +189,7 @@ public class Crazy8Game {
 
     public boolean isRoundUnplayable(){
         for (Player player : players) {
-            if (hasPlayableCard(player, currentTopCard)) {
+            if (hasPlayableCard(player)) {
                 return false;
             }
         }

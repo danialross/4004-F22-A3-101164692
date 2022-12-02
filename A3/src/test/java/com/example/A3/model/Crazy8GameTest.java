@@ -178,25 +178,25 @@ class Crazy8GameTest {
     void hasPlayableCard() {
         game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("7S","QC")));
         game.setCurrentTopCard("7H");
-        assertTrue(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        assertTrue(game.hasPlayableCard(game.getPlayers().get(0)));
         game.setCurrentTopCard("2C");
-        assertTrue(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        assertTrue(game.hasPlayableCard(game.getPlayers().get(0)));
         game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("8S","QC")));
         game.setCurrentTopCard("3D");
-        assertTrue(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        assertTrue(game.hasPlayableCard(game.getPlayers().get(0)));
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QC")));
         game.setCurrentTopCard("3D");
-        assertFalse(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        assertFalse(game.hasPlayableCard(game.getPlayers().get(0)));
 
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QC")));
         game.setPlus2Played(true);
         game.setCurrentTopCard("2C");
-        assertFalse(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        assertFalse(game.hasPlayableCard(game.getPlayers().get(0)));
 
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
         game.setPlus2Played(true);
         game.setCurrentTopCard("2D");
-        assertTrue(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+        assertTrue(game.hasPlayableCard(game.getPlayers().get(0)));
 
     }
 
