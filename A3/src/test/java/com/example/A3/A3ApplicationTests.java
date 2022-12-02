@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class A3ApplicationTests {
@@ -137,16 +138,85 @@ class A3ApplicationTests {
 	}
 
 	@Test
-	void row54() {
+	void row54(){
 		//if chat controller get empty string from repromptForCard it will playCard()
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("5S")));
 		game.setCurrentTopCard("KC");
 
-		assertThat(game.canPlay("5S"), is(false));
-		assertThat(game.repromptForCard(game.canPlay("5S")), is("The card you selected cannot be played, input another card"));
+		assertThat(game.canPlay("5S"),is(false));
+		assertThat(game.repromptForCard(game.canPlay("5S")),is("The card you selected cannot be played, input another card"));
 
-		assertThat(game.getCurrentTopCard(), is("KC"));
-		assertThat(game.getPlayers().get(0).getHand().get(0), is("5S"));
+		assertThat(game.getCurrentTopCard(),is("KC"));
+		assertThat(game.getPlayers().get(0).getHand().get(0),is("5S"));
 
 	}
+
+	@Test
+	void row58(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
+		game.setCurrentTopCard("7C");
+		game.drawUpTo3(new String[]{"6C"});
+
+		ArrayList<String> expected = new ArrayList<>(List.of("3H"));
+		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertThat(game.getCurrentTopCard(),is("6C"));
+	}
+
+	@Test
+	void row59(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
+		game.setCurrentTopCard("7C");
+		game.drawUpTo3(new String[]{"6D","5C"});
+
+		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D"));
+		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertThat(game.getCurrentTopCard(),is("5C"));
+
+	}
+
+	@Test
+	void row60(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
+		game.setCurrentTopCard("7C");
+		game.drawUpTo3(new String[]{"6D","5S","7H"});
+
+		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
+		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertThat(game.getCurrentTopCard(),is("7H"));
+
+	}
+
+	@Test
+	void row61(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
+		game.setCurrentTopCard("7C");
+		game.drawUpTo3(new String[]{"6D","5S","4H"});
+
+		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S","4H"));
+		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertThat(game.getCurrentTopCard(),is("7C"));
+
+	}
+	@Test
+	void row62(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
+		game.setCurrentTopCard("7C");
+		game.drawUpTo3(new String[]{"6D","5S","8H"});
+
+		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
+		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertThat(game.getCurrentTopCard(),is("8H"));
+	}
+
+	@Test
+	void row63(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("KS","3C")));
+		game.setCurrentTopCard("7C");
+		game.drawUpTo3(new String[]{"6C"});
+
+		ArrayList<String> expected = new ArrayList<>(List.of("KS","3C"));
+		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertThat(game.getCurrentTopCard(),is("6C"));
+	}
+
 }
