@@ -11,6 +11,7 @@ public class Crazy8Game {
     private int direction = 1;
     private final int winningThreshold = 100;
     private boolean plus2Played = false;
+    private int plus2Stack = 0;
 
     public Crazy8Game(ArrayList<Player> players){
         this.players = players;
@@ -91,6 +92,7 @@ public class Crazy8Game {
             turnFinished();
         }else if(card.charAt(0)=='2'){
             plus2Played = true;
+            plus2Stack += 2;
         }
         currentTopCard = card;
         turnFinished();
@@ -99,16 +101,15 @@ public class Crazy8Game {
     }
 
     // player plays another 2 card after a 2 was played, so he does not +2 cards but the next player does
-    public void respondWith2Card(boolean response,String[] riggedCard){
-        if(!response){
-            if(riggedCard != null){
-                playerDrawCard(players.get(currPlayerIndex),riggedCard[0]);
-                playerDrawCard(players.get(currPlayerIndex),riggedCard[1]);
-            }else{
-                playerDrawCard(players.get(currPlayerIndex),null);
-                playerDrawCard(players.get(currPlayerIndex),null);
+    public void respondWith2Card(String card,String[] riggedCard){
+        if(card == null){
+            for(int i=0;i<plus2Stack;i++){
+                playerDrawCard(players.get(currPlayerIndex),riggedCard[i]);
             }
             plus2Played = false;
+            plus2Stack = 0;
+        }else{
+            playCard(card);
         }
 
     }

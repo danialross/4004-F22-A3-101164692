@@ -410,17 +410,27 @@ class Crazy8GameTest {
     @Test
     void respondWith2Card() {
         game.playCard("2S");
-        game.respondWith2Card(true,null);
+        game.getPlayers().get(game.getCurrPlayerIndex()).setHand(new ArrayList<>(List.of("2D")));
+        game.respondWith2Card("2D",new String[]{null,null});
         assertTrue(game.isPlus2Played());
-        assertEquals(0,game.getPlayers().get(0).getHand().size());
-        assertEquals(1,game.getCurrPlayerIndex());
-        game.turnFinished();
+        assertEquals(0,game.getPlayers().get(1).getHand().size());
+        assertEquals(2,game.getCurrPlayerIndex());
 
-        game.respondWith2Card(false,null);
-        game.turnFinished();
-        assertEquals(2,game.getPlayers().get(2).getHand().size());
+        game.respondWith2Card(null,new String[]{null,null,null,null});
+        assertEquals(4,game.getPlayers().get(2).getHand().size());
         assertFalse(game.isPlus2Played());
-        assertEquals(3,game.getCurrPlayerIndex());
+        assertEquals(2,game.getCurrPlayerIndex());
+
+        ArrayList<Player> p= new ArrayList<>(Arrays.asList(
+                new Player(null,"p1"),
+                new Player(null,"p2"),
+                new Player(null,"p3"),
+                new Player(null,"p4")));
+        game = new Crazy8Game(p);
+        game.playCard("2S");
+        game.respondWith2Card(null,new String[]{null,null});
+        assertEquals(2,game.getPlayers().get(1).getHand().size());
+
 
 
     }
