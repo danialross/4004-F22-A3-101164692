@@ -327,6 +327,14 @@ public class Crazy8Game {
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
     }
 
+    public String repromptForCard(boolean canPlayResponse){
+        String prompt = "";
+        if(canPlayResponse == false){
+            prompt = "The card you selected cannot be played, input another card";
+        }
+        return prompt;
+    }
+
     public String getCurrentTopCard() {
         return currentTopCard;
     }
