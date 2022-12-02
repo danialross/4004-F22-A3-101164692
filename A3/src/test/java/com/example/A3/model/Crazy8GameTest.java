@@ -74,38 +74,56 @@ class Crazy8GameTest {
     @Test
     void playCard() {
 
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("5S")));
         game.playCard("5S");
         assertEquals("5S",game.getCurrentTopCard());
         assertEquals(1,game.getCurrPlayerIndex());
+        assertFalse(game.getPlayers().get(0).getHand().contains("5S"));
 
         game = new Crazy8Game(players);
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AD")));
+        game.getPlayers().get(3).setHand(new ArrayList<>(List.of("AS")));
         game.playCard("AD");
         assertEquals(-1,game.getDirection());
+        assertFalse(game.getPlayers().get(0).getHand().contains("AD"));
 
         game.playCard("AS");
         assertEquals(1,game.getDirection());
+        assertFalse(game.getPlayers().get(0).getHand().contains("AS"));
 
         //p1-p3
         game = new Crazy8Game(players);
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QD")));
         game.playCard("QD");
+        assertFalse(game.getPlayers().get(0).getHand().contains("QD"));
         assertEquals("p3",game.getCurrentPlayerTurn());
+
+
         //p3-p1
         game = new Crazy8Game(players);
+        game.getPlayers().get(2).setHand(new ArrayList<>(List.of("AD")));
         game.setCurrPlayerIndex(2);
         game.playCard("QC");
         assertEquals("p1",game.getCurrentPlayerTurn());
+        assertFalse(game.getPlayers().get(0).getHand().contains("AD"));
+
         //p2-p4
         game = new Crazy8Game(players);
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("AD")));
         game.setDirection(-1);
         game.setCurrPlayerIndex(1);
         game.playCard("QH");
         assertEquals("p4",game.getCurrentPlayerTurn());
+        assertFalse(game.getPlayers().get(0).getHand().contains("AD"));
+
         //p4-p2
         game = new Crazy8Game(players);
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("AD")));
         game.setDirection(-1);
         game.setCurrPlayerIndex(1);
         game.playCard("QS");
         assertEquals("p4",game.getCurrentPlayerTurn());
+        assertFalse(game.getPlayers().get(0).getHand().contains("AD"));
 
     }
 
