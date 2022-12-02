@@ -6,6 +6,7 @@ import java.util.Collections;
 public class Crazy8Game {
     private ArrayList<String> deck = new ArrayList<>();
     private final ArrayList<Player> players;
+    private int currentFirstPlayer = 0;
     private String currentTopCard;
     private int currPlayerIndex = 0;
     private int direction = 1;
@@ -126,6 +127,10 @@ public class Crazy8Game {
                 currPlayerIndex += 4;
             }
         }
+    }
+
+    public void setupNextRound(){
+
     }
 
     // return current direction as left or right
@@ -340,5 +345,9 @@ public class Crazy8Game {
 
     public boolean isPlus2Played() {
         return plus2Played;
+    }
+
+    public int getCurrentFirstPlayer() {
+        return currentFirstPlayer;
     }
 }

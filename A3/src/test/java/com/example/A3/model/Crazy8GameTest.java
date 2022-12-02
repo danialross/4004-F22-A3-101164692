@@ -448,4 +448,19 @@ class Crazy8GameTest {
         assertTrue(game.getPlayers().get(1).getHand().equals(new ArrayList<>(List.of("3H","6D","QH","9D","9H"))));
 
     }
+
+    @Test
+    void setupNextRound() {
+        assertEquals(0,game.getCurrentFirstPlayer());
+        game.setupNextRound();
+        assertEquals(1,game.getCurrentFirstPlayer());
+        game.setupNextRound();
+        assertEquals(2,game.getCurrentFirstPlayer());
+        game.setupNextRound();
+        assertEquals(3,game.getCurrentFirstPlayer());
+        game.setupNextRound();
+        assertEquals(1,game.getCurrentFirstPlayer());
+        
+
+    }
 }
