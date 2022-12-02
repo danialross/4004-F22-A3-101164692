@@ -479,4 +479,11 @@ class Crazy8GameTest {
         assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(1)));
 
     }
+
+    @Test
+    void repromptForCard() {
+        assertEquals("",game.repromptForCard(true));
+        assertEquals("The card you selected cannot be played, input another card",game.repromptForCard(false));
+
+    }
 }
