@@ -391,13 +391,15 @@ class Crazy8GameTest {
 
     @Test
     void respondWith2Card() {
-        game.setCurrentTopCard("2S");
+        game.playCard("2S");
         game.respondWith2Card(true,null);
+
         assertEquals(0,game.getPlayers().get(0).getHand().size());
-        assertEquals(1,game.getCurrPlayerIndex());
+        assertEquals(2,game.getCurrPlayerIndex());
 
         game.respondWith2Card(false,null);
-        assertEquals(2,game.getPlayers().get(1).getHand().size());
+        assertEquals(2,game.getPlayers().get(2).getHand().size());
+        
 
 
     }
