@@ -421,4 +421,18 @@ class Crazy8GameTest {
 
 
     }
+
+    @Test
+    void drawUpTo3() {
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3S","6D")));
+        game.setCurrentTopCard("5H");
+        game.drawUpTo3(new String[]{"KS","7D","5S"});
+        assertTrue(game.getPlayers().get(0).getHand().equals(new ArrayList<>(List.of("3S","6D","KS","7D"))));
+
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("3H","6D")));
+        game.drawUpTo3(new String[]{"QH","9D","9H","AH"});
+        assertTrue(game.getCurrentTopCard()=="5S");
+        assertTrue(game.getPlayers().get(1).getHand().equals(new ArrayList<>(List.of("3H","6D","QH","9D","9H"))));
+
+    }
 }
