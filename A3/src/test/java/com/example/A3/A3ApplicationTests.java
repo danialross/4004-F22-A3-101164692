@@ -21,30 +21,29 @@ class A3ApplicationTests {
 			new Player(null,"p2"),
 			new Player(null,"p3"),
 			new Player(null,"p4")));
-	Crazy8Game game = new Crazy8Game(players);
+	Crazy8Game game = new Crazy8Game(players);;
 	@Test
 	void row41() {
-		//draw card as rigging instead of setting hand to have 3C
-		game.drawCard("3C");
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3C")));
+
 		game.playCard("3C");
-		assertThat(this.game.getCurrPlayerIndex(), is(1));
+		assertThat(game.getCurrPlayerIndex(), is(1));
 
 	}
 
 	@Test
 	void row42() {
-		//draw card as rigging instead of setting hand
-		game.drawCard("AH");
-		game.playCard("AH");
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AH")));
+		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("7H")));
 
+		game.playCard("AH");
 		assertThat(game.notifyAction(2),is("an Ace was played, the direction has been reversed"));
 		assertThat(game.showDirection(),is("Current Direction is Right"));
 		assertThat(this.game.getCurrPlayerIndex(), is(3));
 
-		game.drawCard("7H");
 		game.playCard("7H");
 		assertThat(game.getCurrPlayerIndex(),is(2));
 
 	}
-
+	
 }
