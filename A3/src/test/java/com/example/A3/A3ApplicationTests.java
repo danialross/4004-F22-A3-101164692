@@ -31,4 +31,20 @@ class A3ApplicationTests {
 
 	}
 
+	@Test
+	void row42() {
+		//draw card as rigging instead of setting hand
+		game.drawCard("AH");
+		game.playCard("AH");
+
+		assertThat(game.notifyAction(2),is("an Ace was played, the direction has been reversed"));
+		assertThat(game.showDirection(),is("Current Direction is Right"));
+		assertThat(this.game.getCurrPlayerIndex(), is(3));
+
+		game.drawCard("7H");
+		game.playCard("7H");
+		assertThat(game.getCurrPlayerIndex(),is(2));
+
+	}
+
 }
