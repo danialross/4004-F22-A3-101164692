@@ -290,7 +290,7 @@ public class Crazy8Game {
                 players.get(3).getName()+" : " + players.get(3).getScore() +" Points\n";
     }
 
-    public String showCurrentPlayersTurn(){
+    public String showCardAndTurn(){
         return "Current Card: " + currentTopCard + "\n" + getCurrentPlayerTurn()+ "'s turn";
     }
 
