@@ -130,7 +130,12 @@ public class Crazy8Game {
     }
 
     public void setupNextRound(){
-
+        generateDeck();
+        Collections.shuffle(deck);
+        currentFirstPlayer++;
+        if(currentFirstPlayer == 4 ){
+            currentFirstPlayer = 0;
+        }
     }
 
     // return current direction as left or right
