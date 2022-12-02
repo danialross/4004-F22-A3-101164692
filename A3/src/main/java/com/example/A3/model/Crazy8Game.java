@@ -112,15 +112,6 @@ public class Crazy8Game {
         turnFinished();
 
     }
-    // check whether player can even respond to a 2 card being played
-    public boolean canRespondTo2Card(){
-        for(String card: players.get(currPlayerIndex).getHand()){
-            if(card.charAt(0) == '2'){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void turnFinished() {
         if (direction == 1) {
@@ -175,13 +166,21 @@ public class Crazy8Game {
     }
 
     public boolean hasPlayableCard(Player p,String card){
-        for(int i = 0;i<p.getHand().size();i++){
-            if(p.getHand().get(i).charAt(0) == '8'){
-                return true;
-            }else if(p.getHand().get(i).charAt(0) == card.charAt(0)){
-                return true;
-            }else if(p.getHand().get(i).charAt(1) == card.charAt(1)){
-                return true;
+        if(plus2Played){
+            for(String playerCard: p.getHand()){
+                if(playerCard.charAt(0) == '2'){
+                    return true;
+                }
+            }
+        }else{
+            for(int i = 0;i<p.getHand().size();i++){
+                if(p.getHand().get(i).charAt(0) == '8'){
+                    return true;
+                }else if(p.getHand().get(i).charAt(0) == card.charAt(0)){
+                    return true;
+                }else if(p.getHand().get(i).charAt(1) == card.charAt(1)){
+                    return true;
+                }
             }
         }
         return false;
@@ -300,4 +299,10 @@ public class Crazy8Game {
     public int getCurrPlayerIndex() {
         return currPlayerIndex;
     }
+
+    public void setPlus2Played(boolean plus2Played) {
+        this.plus2Played = plus2Played;
+    }
+
+
 }

@@ -188,6 +188,16 @@ class Crazy8GameTest {
         game.setCurrentTopCard("3D");
         assertFalse(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
 
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QC")));
+        game.setPlus2Played(true);
+        game.setCurrentTopCard("2C");
+        assertFalse(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+        game.setPlus2Played(true);
+        game.setCurrentTopCard("2D");
+        assertTrue(game.hasPlayableCard(game.getPlayers().get(0), game.getCurrentTopCard()));
+
     }
 
     @Test
@@ -390,14 +400,5 @@ class Crazy8GameTest {
         assertEquals(2,game.getPlayers().get(1).getHand().size());
 
 
-    }
-
-    @Test
-    void canRespondTo2Card() {
-        game.setCurrentTopCard("2C");
-        assertFalse(game.canRespondTo2Card());
-        
-        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2D")));
-        assertTrue(game.canRespondTo2Card());
     }
 }
