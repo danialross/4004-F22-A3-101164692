@@ -141,9 +141,9 @@ public class Crazy8Game {
     // return current direction as left or right
     public String showDirection(){
         if(direction==1){
-            return "Left";
+            return "Current Direction is Left";
         }else{
-            return "Right";
+            return "Current Direction is Right";
         }
     }
 

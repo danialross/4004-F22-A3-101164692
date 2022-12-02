@@ -147,9 +147,9 @@ class Crazy8GameTest {
 
     @Test
     void showDirection() {
-        assertEquals("Left",game.showDirection());
+        assertEquals("Current Direction is Left",game.showDirection());
         game.setDirection(-1);
-        assertEquals("Right",game.showDirection());
+        assertEquals("Current Direction is Right",game.showDirection());
     }
 
     @Test
