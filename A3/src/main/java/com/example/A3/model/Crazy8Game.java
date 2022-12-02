@@ -107,6 +107,7 @@ public class Crazy8Game {
                 playerDrawCard(players.get(currPlayerIndex),null);
                 playerDrawCard(players.get(currPlayerIndex),null);
             }
+            plus2Played = false;
         }
 
         turnFinished();
