@@ -463,4 +463,20 @@ class Crazy8GameTest {
 
 
     }
+
+    @Test
+    void canPlay() {
+        game.getPlayers().get(0).setHand(new ArrayList<>(Arrays.asList("7S","2C","8C","3H")));
+        game.setCurrentTopCard("7H");
+        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(3)));
+        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(0)));
+        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(2)));
+        game.setCurrentTopCard("2H");
+        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(3)));
+        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(1)));
+        game.setPlus2Played(true);
+        assertFalse(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(3)));
+        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(1)));
+
+    }
 }
