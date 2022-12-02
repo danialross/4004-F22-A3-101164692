@@ -459,8 +459,8 @@ class Crazy8GameTest {
         game.setupNextRound();
         assertEquals(3,game.getCurrentFirstPlayer());
         game.setupNextRound();
-        assertEquals(1,game.getCurrentFirstPlayer());
-        
+        assertEquals(0,game.getCurrentFirstPlayer());
+
 
     }
 }
