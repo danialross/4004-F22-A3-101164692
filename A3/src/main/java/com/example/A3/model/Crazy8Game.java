@@ -84,6 +84,7 @@ public class Crazy8Game {
     }
 
     public void playCard(String card){
+        players.get(currPlayerIndex).getHand().remove(card);
         if(card.charAt(0)=='A'){
             direction = -direction;
         }else if(card.charAt(0)=='Q') {
