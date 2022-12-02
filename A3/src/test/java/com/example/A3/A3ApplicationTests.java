@@ -2,6 +2,7 @@ package com.example.A3;
 
 import com.example.A3.model.Crazy8Game;
 import com.example.A3.model.Player;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -93,6 +94,59 @@ class A3ApplicationTests {
 		game.playCard("QC");
 		assertThat(game.notifyAction(3),is("a Queen was played, the next player's turn has been skipped"));
 		assertThat(this.game.getCurrPlayerIndex(), is(1));
+
+	}
+
+	@Test
+	void row51(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("KH")));
+		game.setCurrentTopCard("KC");
+
+		assertThat(game.canPlay("KH"),is(true));
+		assertThat(game.repromptForCard(game.canPlay("KH")),is(""));
+		game.playCard("KH");
+		assertThat(game.getCurrentTopCard(),is("KH"));
+		assertThat(game.getPlayers().get(0).getHand(), Matchers.empty());
+
+	}
+
+	@Test
+	void row52(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("7C")));
+		game.setCurrentTopCard("KC");
+
+		assertThat(game.canPlay("7C"),is(true));
+		assertThat(game.repromptForCard(game.canPlay("7C")),is(""));
+		game.playCard("7C");
+		assertThat(game.getCurrentTopCard(),is("7C"));
+		assertThat(game.getPlayers().get(0).getHand(), Matchers.empty());
+	}
+	@Test
+	void row53(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("8H")));
+		game.setCurrentTopCard("KC");
+
+		assertThat(game.canPlay("8H"),is(true));
+		assertThat(game.repromptForCard(game.canPlay("8H")),is(""));
+		game.playCard("8H");
+
+		//controller will say if 2 or 8 card plays a response from the user will be asked
+		assertThat(game.requestAction(1),is("Select a new suit.(D/C/H/S)"));
+		assertThat(game.getCurrentTopCard(),is("8H"));
+		assertThat(game.getPlayers().get(0).getHand(), Matchers.empty());
+	}
+
+	@Test
+	void row54() {
+		//if chat controller get empty string from repromptForCard it will playCard()
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("5S")));
+		game.setCurrentTopCard("KC");
+
+		assertThat(game.canPlay("5S"), is(false));
+		assertThat(game.repromptForCard(game.canPlay("5S")), is("The card you selected cannot be played, input another card"));
+
+		assertThat(game.getCurrentTopCard(), is("KC"));
+		assertThat(game.getPlayers().get(0).getHand().get(0), is("5S"));
 
 	}
 }
