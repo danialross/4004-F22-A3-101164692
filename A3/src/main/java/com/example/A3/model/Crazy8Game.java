@@ -304,5 +304,7 @@ public class Crazy8Game {
         this.plus2Played = plus2Played;
     }
 
-
+    public boolean isPlus2Played() {
+        return plus2Played;
+    }
 }
