@@ -197,6 +197,29 @@ public class Crazy8Game {
         return false;
     }
 
+    public boolean canPlay(String card){
+        if(!players.get(currPlayerIndex).getHand().contains(card)){
+            return false;
+        }
+        if(plus2Played){
+            if(card.charAt(0)=='2'){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        if(card.charAt(0)=='8'){
+            return true;
+        }
+        if(card.charAt(0)==currentTopCard.charAt(0) ){
+            return true;
+        }
+        if(card.charAt(1)==currentTopCard.charAt(1)){
+            return true;
+        }
+        return false;
+    }
+
     public boolean isRoundUnplayable(){
         for (Player player : players) {
             if (hasPlayableCard(player)) {
