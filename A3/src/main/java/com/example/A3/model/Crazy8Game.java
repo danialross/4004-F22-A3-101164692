@@ -219,6 +219,39 @@ public class Crazy8Game {
         p.setScore(p.getScore()+total);
     }
 
+    public String[] drawUpTo3(String[] riggedCards){
+        String[] drewCards = new String[3];
+
+        if(riggedCards!=null){
+
+            for (int i = 0; i < 3; i++) {
+                playerDrawCard(players.get(currPlayerIndex), riggedCards[i]);
+                drewCards[i] = showLastCard(players.get(currPlayerIndex));
+                if (hasPlayableCard(players.get(currPlayerIndex))) {
+
+                    ArrayList<String> playerHand = players.get(currPlayerIndex).getHand();
+                    playCard(playerHand.get(playerHand.size()-1));
+                    break;
+                }
+            }
+
+        }else {
+
+            for (int i = 0; i < 3; i++) {
+                playerDrawCard(players.get(currPlayerIndex), null);
+                drewCards[i] = showLastCard(players.get(currPlayerIndex));
+                if (hasPlayableCard(players.get(currPlayerIndex))) {
+                    ArrayList<String> playerHand = players.get(currPlayerIndex).getHand();
+                    playCard(playerHand.get(playerHand.size()-1));
+                    break;
+                }
+            }
+        }
+
+        return drewCards;
+    }
+
+
     public boolean isDrawDeckEmpty(){
         return deck.size() == 0;
     }
