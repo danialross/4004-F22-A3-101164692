@@ -236,9 +236,9 @@ class Crazy8GameTest {
         game.setCurrentTopCard("2C");
         assertFalse(game.hasPlayableCard(game.getPlayers().get(0)));
 
-        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QC","7C")));
         game.setPlus2Played(true);
-        game.setCurrentTopCard("2D");
+        game.setCurrentTopCard("2C");
         assertTrue(game.hasPlayableCard(game.getPlayers().get(0)));
 
     }

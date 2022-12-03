@@ -195,18 +195,30 @@ public class Crazy8Game {
     //if player has a card to play
     public boolean hasPlayableCard(Player p){
         if(plus2Played){
-            for(String playerCard: p.getHand()){
-                if(playerCard.charAt(0) == '2'){
-                    return true;
+            if(p.getHand().size()<2){
+                return false;
+            }else{
+                int counter = 0;
+                for(int i = 0;i<p.getHand().size();i++){
+                    if(p.getHand().get(i).charAt(0) == '8' ||
+                            p.getHand().get(i).charAt(0) == currentTopCard.charAt(0) ||
+                            p.getHand().get(i).charAt(1) == currentTopCard.charAt(1)) {
+
+                        counter++;
+                    }
+
+                    if(counter==2){
+                        return true;
+                    }
                 }
             }
+
         }else{
             for(int i = 0;i<p.getHand().size();i++){
-                if(p.getHand().get(i).charAt(0) == '8'){
-                    return true;
-                }else if(p.getHand().get(i).charAt(0) == currentTopCard.charAt(0)){
-                    return true;
-                }else if(p.getHand().get(i).charAt(1) == currentTopCard.charAt(1)){
+                if(p.getHand().get(i).charAt(0) == '8' ||
+                        p.getHand().get(i).charAt(0) == currentTopCard.charAt(0) ||
+                        p.getHand().get(i).charAt(1) == currentTopCard.charAt(1)){
+
                     return true;
                 }
             }
