@@ -29,6 +29,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3C")));
 
 		game.playCard("3C");
+		game.turnFinished();
 		assertThat(game.getCurrPlayerIndex(), is(1));
 
 	}
@@ -39,11 +40,13 @@ class A3ApplicationTests {
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("7H")));
 
 		game.playCard("AH");
+		game.turnFinished();
 		assertThat(game.notifyAction(2),is("an Ace was played, the direction has been reversed"));
 		assertThat(game.showDirection(),is("Current Direction is Right"));
 		assertThat(this.game.getCurrPlayerIndex(), is(3));
 
 		game.playCard("7H");
+		game.turnFinished();
 		assertThat(game.getCurrPlayerIndex(),is(2));
 
 	}
@@ -53,6 +56,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QC")));
 
 		game.playCard("QC");
+		game.turnFinished();
 		assertThat(game.notifyAction(3),is("a Queen was played, the next player's turn has been skipped"));
 		assertThat(this.game.getCurrPlayerIndex(), is(2));
 
@@ -65,6 +69,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C")));
 
 		game.playCard("3C");
+		game.turnFinished();
 		assertThat(this.game.getCurrPlayerIndex(), is(0));
 
 	}
@@ -77,11 +82,13 @@ class A3ApplicationTests {
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7H")));
 
 		game.playCard("AC");
+		game.turnFinished();
 		assertThat(this.game.getCurrPlayerIndex(), is(2));
 		assertThat(game.notifyAction(2),is("an Ace was played, the direction has been reversed"));
 		assertThat(game.showDirection(),is("Current Direction is Right"));
 
 		game.playCard("7H");
+		game.turnFinished();
 		assertThat(this.game.getCurrPlayerIndex(), is(1));
 
 	}
@@ -93,6 +100,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("QC")));
 
 		game.playCard("QC");
+		game.turnFinished();
 		assertThat(game.notifyAction(3),is("a Queen was played, the next player's turn has been skipped"));
 		assertThat(this.game.getCurrPlayerIndex(), is(1));
 
@@ -106,6 +114,7 @@ class A3ApplicationTests {
 		assertThat(game.canPlay("KH"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("KH")),is(""));
 		game.playCard("KH");
+		game.turnFinished();
 		assertThat(game.getCurrentTopCard(),is("KH"));
 		assertThat(game.getPlayers().get(0).getHand(), Matchers.empty());
 
@@ -119,6 +128,7 @@ class A3ApplicationTests {
 		assertThat(game.canPlay("7C"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("7C")),is(""));
 		game.playCard("7C");
+		game.turnFinished();
 		assertThat(game.getCurrentTopCard(),is("7C"));
 		assertThat(game.getPlayers().get(0).getHand(), Matchers.empty());
 	}
@@ -130,6 +140,7 @@ class A3ApplicationTests {
 		assertThat(game.canPlay("8H"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("8H")),is(""));
 		game.playCard("8H");
+		game.turnFinished();
 
 		//controller will say if 2 or 8 card plays a response from the user will be asked
 		assertThat(game.requestAction(1),is("Select a new suit.(D/C/H/S)"));
@@ -157,6 +168,7 @@ class A3ApplicationTests {
 		game.setCurrentTopCard("7C");
 		game.drawUpTo3("6C");
 		game.playCard("6C");
+		game.turnFinished();
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
@@ -170,6 +182,7 @@ class A3ApplicationTests {
 		game.drawUpTo3("6D");
 		game.drawUpTo3("5C");
 		game.playCard("5C");
+		game.turnFinished();
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
@@ -185,6 +198,7 @@ class A3ApplicationTests {
 		game.drawUpTo3("5S");
 		game.drawUpTo3("7H");
 		game.playCard("7H");
+		game.turnFinished();
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
@@ -213,6 +227,7 @@ class A3ApplicationTests {
 		game.drawUpTo3("5S");
 		game.drawUpTo3("8H");
 		game.playCard("8H");
+		game.turnFinished();
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
@@ -225,6 +240,7 @@ class A3ApplicationTests {
 		game.setCurrentTopCard("7C");
 		game.drawUpTo3("6C");
 		game.playCard("6C");
+		game.turnFinished();
 
 		ArrayList<String> expected = new ArrayList<>(List.of("KS","3C"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());

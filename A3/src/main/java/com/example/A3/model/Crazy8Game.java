@@ -103,20 +103,30 @@ public class Crazy8Game {
         }
         currentTopCard = card;
         players.get(currPlayerIndex).setDrawCounter(0);
-        turnFinished();
+
 
 
     }
 
 
     // player plays another 2 card after a 2 was played, so he does not +2 cards but the next player does
-    public void respondWith2Card(String card,String[] riggedCard){
-        if(card == null){
+    public void respondWith2Card(String[] cards,String[] riggedCard){
+        if(cards == null){
             for(int i=0;i<plus2Stack;i++){
                 playerDrawCard(players.get(currPlayerIndex),riggedCard[i]);
             }
         }else{
-            playCard(card);
+            if(cards[0].charAt(0)!='2'){
+                int stack = plus2Stack;
+                playCard(cards[0]);
+                playCard(cards[1]);
+                plus2Stack = stack+2;
+                plus2Played = true;
+                turnFinished();
+            }else{
+                playCard(cards[0]);
+                turnFinished();
+            }
         }
 
     }
@@ -182,6 +192,7 @@ public class Crazy8Game {
         }
     }
 
+    //if player has a card to play
     public boolean hasPlayableCard(Player p){
         if(plus2Played){
             for(String playerCard: p.getHand()){
@@ -203,17 +214,12 @@ public class Crazy8Game {
         return false;
     }
 
+    //input validation for user
     public boolean canPlay(String card){
         if(!players.get(currPlayerIndex).getHand().contains(card)){
             return false;
         }
-        if(plus2Played){
-            if(card.charAt(0)=='2'){
-                return true;
-            }else{
-                return false;
-            }
-        }
+
         if(card.charAt(0)=='8'){
             return true;
         }

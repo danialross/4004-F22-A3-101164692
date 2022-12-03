@@ -83,6 +83,7 @@ class Crazy8GameTest {
 
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("5S")));
         game.playCard("5S");
+        game.turnFinished();
         assertEquals("5S",game.getCurrentTopCard());
         assertFalse(game.getPlayers().get(0).getHand().contains("5S"));
 
@@ -94,6 +95,7 @@ class Crazy8GameTest {
         assertFalse(game.getPlayers().get(0).getHand().contains("AD"));
 
         game.playCard("AS");
+        game.turnFinished();
         assertEquals(1,game.getDirection());
         assertFalse(game.getPlayers().get(0).getHand().contains("AS"));
 
@@ -101,6 +103,7 @@ class Crazy8GameTest {
         game = new Crazy8Game(players);
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QD")));
         game.playCard("QD");
+        game.turnFinished();
         assertFalse(game.getPlayers().get(0).getHand().contains("QD"));
         assertEquals("p3",game.getCurrentPlayerTurn());
 
@@ -109,6 +112,7 @@ class Crazy8GameTest {
         game.getPlayers().get(2).setHand(new ArrayList<>(List.of("QC")));
         game.setCurrPlayerIndex(2);
         game.playCard("QC");
+        game.turnFinished();
         assertEquals("p1",game.getCurrentPlayerTurn());
         assertFalse(game.getPlayers().get(2).getHand().contains("QC"));
 
@@ -118,6 +122,7 @@ class Crazy8GameTest {
         game.setDirection(-1);
         game.setCurrPlayerIndex(1);
         game.playCard("QH");
+        game.turnFinished();
         assertEquals("p4",game.getCurrentPlayerTurn());
         assertFalse(game.getPlayers().get(1).getHand().contains("QH"));
 
@@ -127,6 +132,7 @@ class Crazy8GameTest {
         game.setDirection(-1);
         game.setCurrPlayerIndex(3);
         game.playCard("QS");
+        game.turnFinished();
         assertEquals("p2",game.getCurrentPlayerTurn());
         assertFalse(game.getPlayers().get(3).getHand().contains("QS"));
 
@@ -136,16 +142,12 @@ class Crazy8GameTest {
         game.getPlayers().get(2).setHand(new ArrayList<>(List.of("2C")));
         game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C")));
         game.playCard("2H");
+        game.turnFinished();
         assertTrue(game.isPlus2Played());
         assertEquals(2,game.getPlus2Stack());
 
-        game.respondWith2Card("2D",null);
-        assertEquals(4,game.getPlus2Stack());
-
-        game.respondWith2Card( "2C",null);
-        assertEquals(6,game.getPlus2Stack());
-
         game.playCard("3C");
+        game.turnFinished();
         assertFalse(game.isPlus2Played());
 
     }
@@ -432,29 +434,31 @@ class Crazy8GameTest {
 
     @Test
     void respondWith2Card() {
-        game.playCard("2S");
-        game.getPlayers().get(game.getCurrPlayerIndex()).setHand(new ArrayList<>(List.of("2D")));
-        game.respondWith2Card("2D",new String[]{null,null});
-        assertTrue(game.isPlus2Played());
-        assertEquals(0,game.getPlayers().get(1).getHand().size());
-        assertEquals(2,game.getCurrPlayerIndex());
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("3S","4S")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(List.of("9S")));
 
-        game.getPlayers().get(game.getCurrPlayerIndex()).setHand(new ArrayList<>(List.of("9D")));
-        game.respondWith2Card(null,new String[]{null,null,null,null});
-        game.playCard("9D");
+        game.playCard("2S");
+        game.turnFinished();
+        game.respondWith2Card(new String[]{"3S","4S"},new String[] {null,null,null,null});
+        assertEquals(0,game.getPlayers().get(1).getHand().size());
+
+        game.respondWith2Card(null,new String[] {null,null,null,null});
+        game.playCard("9S");
+        game.turnFinished();
         assertEquals(4,game.getPlayers().get(2).getHand().size());
-        assertFalse(game.isPlus2Played());
-        assertEquals(3,game.getCurrPlayerIndex());
 
         game = new Crazy8Game(players);
-        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("5S")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("2D")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(List.of("9S")));
         game.playCard("2S");
-        game.respondWith2Card(null,new String[]{null,null});
-        game.playCard("5S");
-        assertEquals(2,game.getPlayers().get(1).getHand().size());
-        assertEquals(2,game.getCurrPlayerIndex());
+        game.turnFinished();
+        game.respondWith2Card(new String[]{"2D"},new String[] {null,null,null,null});
+        assertEquals(0,game.getPlayers().get(1).getHand().size());
 
-
+        game.respondWith2Card(null,new String[] {null,null,null,null});
+        game.playCard("9S");
+        game.turnFinished();
+        assertEquals(4,game.getPlayers().get(2).getHand().size());
 
     }
 
@@ -469,6 +473,7 @@ class Crazy8GameTest {
         assertEquals("5S",game.drawUpTo3("5S"));
         assertEquals(3,game.getPlayers().get(0).getDrawCounter());
         game.playCard("5S");
+        game.turnFinished();
         assertEquals(0,game.getPlayers().get(0).getDrawCounter());
         assertTrue(game.getPlayers().get(0).getHand().equals(new ArrayList<>(List.of("3S","6D","KS","7D"))));
 
@@ -509,12 +514,7 @@ class Crazy8GameTest {
         assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(3)));
         assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(0)));
         assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(2)));
-        game.setCurrentTopCard("2H");
-        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(3)));
-        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(1)));
-        game.setPlus2Played(true);
-        assertFalse(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(3)));
-        assertTrue(game.canPlay(game.getPlayers().get(game.getCurrPlayerIndex()).getHand().get(1)));
+
 
     }
 
