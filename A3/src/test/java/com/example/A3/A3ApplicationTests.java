@@ -246,5 +246,132 @@ class A3ApplicationTests {
 		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("6C"));
 	}
+	//p1 plays 2C, p2 has only  {4H} thus must draw 2 cards {6C and 9D} then plays 6C
+	@Test
+	void row67(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
 
+		game.playCard("2C");
+		game.turnFinished();
+
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.respondWith2Card(null,new String[]{"6C","9D"});
+		game.playCard("6C");
+		game.turnFinished();
+
+		ArrayList<String> expected = new ArrayList<>(List.of("4H","9D"));
+		assertEquals(expected,game.getPlayers().get(1).getHand());
+
+	}
+
+	//p1 plays 2C, p2 has only {4H}, draws {6S and 9D}, still can't play, then draws 9H then 6C and then must play 6C
+	@Test
+	void row68(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
+
+		game.playCard("2C");
+		game.turnFinished();
+
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.respondWith2Card(null,new String[]{"6S","9D"});
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.drawUpTo3("9H");
+		game.drawUpTo3("6C");
+		game.playCard("6C");
+		game.turnFinished();
+
+		ArrayList<String> expected = new ArrayList<>(List.of("4H","6S","9D","9H"));
+		assertEquals(expected,game.getPlayers().get(1).getHand());
+
+
+	}
+
+	//p1 plays 2C, p2 has only {4H} draws {6S and 9D} then draws 9H, 7S, 5H and then  turns end (without playing a card)
+	@Test
+	void row69(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
+
+		game.playCard("2C");
+		game.turnFinished();
+
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.respondWith2Card(null,new String[]{"6S","9D"});
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.drawUpTo3("9H");
+		game.drawUpTo3("7S");
+		game.drawUpTo3("5H");
+		// simulating user passing
+		game.turnFinished();
+
+		ArrayList<String> expected = new ArrayList<>(List.of("4H","6S","9D","9H","7S","5H"));
+		assertEquals(expected,game.getPlayers().get(1).getHand());
+		assertThat(game.getCurrPlayerIndex(),is(2));
+
+
+	}
+
+	//p1 plays 2C, p2 has {4H} draws {2H and 9D} then plays 2H (forcing next player to immediately play or draw 4 cards)
+	@Test
+	void row70(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
+		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
+
+		game.playCard("2C");
+		game.turnFinished();
+
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.respondWith2Card(null,new String[]{"2H","9D"});
+		game.playCard("2H");
+		game.turnFinished();
+
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.respondWith2Card(null,new String[]{"5S","6D", "6H","7C"});
+		game.playCard("6H");
+		game.turnFinished();
+
+		ArrayList<String> expected = new ArrayList<>(List.of("7D","5S","6D","7C"));
+		assertEquals(expected,game.getPlayers().get(2).getHand());
+		assertThat(game.getCurrPlayerIndex(),is(3));
+
+
+	}
+
+	//p1 plays 2C, p2 has {4C, 6C, 9D} then p2 plays 4C and 6C (ie 2 legal cards) and ends their turn
+	void row72(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4C","6C","9D")));
+		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
+		game.playCard("2C");
+		game.turnFinished();
+
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.respondWith2Card(new String[]{"4C","6C"},null);
+
+		ArrayList<String> expected = new ArrayList<>(List.of("9D"));
+		assertEquals(expected,game.getPlayers().get(1).getHand());
+		assertThat(game.getCurrPlayerIndex(),is(3));
+
+	}
+
+	// p1 plays 2C, p2 has {4C, 6C} then p2 plays 4C and 6C and ends round (because p2 played all their cards)
+	void row73(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4C","6C")));
+		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
+		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("4S")));
+		game.playCard("2C");
+		game.turnFinished();
+
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
+		game.respondWith2Card(new String[]{"4C","6C"},null);
+		assertThat(game.didFinishRound(),is(true));
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(true));
+		assertThat(game.getCurrPlayerIndex(),is(3));
+		assertThat(game.getCurrPlayerIndex(),is(3));
+
+	}
 }
