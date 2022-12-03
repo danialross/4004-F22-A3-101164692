@@ -96,6 +96,11 @@ public class Crazy8Game {
             plus2Played = true;
             plus2Stack += 2;
         }
+
+        if(card.charAt(0)!='2'){
+            plus2Played = false;
+            plus2Stack = 0;
+        }
         currentTopCard = card;
         players.get(currPlayerIndex).setDrawCounter(0);
         turnFinished();
@@ -110,8 +115,6 @@ public class Crazy8Game {
             for(int i=0;i<plus2Stack;i++){
                 playerDrawCard(players.get(currPlayerIndex),riggedCard[i]);
             }
-            plus2Played = false;
-            plus2Stack = 0;
         }else{
             playCard(card);
         }
@@ -374,4 +377,9 @@ public class Crazy8Game {
     public int getCurrentFirstPlayer() {
         return currentFirstPlayer;
     }
+
+    public int getPlus2Stack() {
+        return plus2Stack;
+    }
 }
+
