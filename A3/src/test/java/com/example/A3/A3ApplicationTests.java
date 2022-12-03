@@ -374,4 +374,22 @@ class A3ApplicationTests {
 		assertThat(game.getCurrPlayerIndex(),is(3));
 
 	}
+
+	void row77(){
+		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AS")));
+		game.getPlayers().get(1).setHand(new ArrayList<>());
+		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("8H","JH","6H","KH","KS")));
+		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("8C", "8D", "2D")));
+
+		assertThat(game.didFinishRound(),is(true));
+		assertThat(game.didFinishRound(),is(true));
+		assertThat(game.showScores(),is("""
+				 --Player scores--
+                p1 : 1 Points
+                p2 : 0 Points
+                p3 : 86 Points
+                p4 : 102 Points
+                """));
+
+	}
 }
