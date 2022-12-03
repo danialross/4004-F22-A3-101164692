@@ -8,11 +8,13 @@ public class Player {
     private String name;
     private ArrayList<String> hand;
     private int score;
+    private int drawCounter;
 
     public Player(Principal user, String name){
         this.user = user;
         this.name = name;
         score = 0;
+        drawCounter = 0;
         hand = new ArrayList<>();
     }
 
@@ -38,5 +40,13 @@ public class Player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getDrawCounter() {
+        return drawCounter;
+    }
+
+    public void setDrawCounter(int drawCounter) {
+        this.drawCounter = drawCounter;
     }
 }

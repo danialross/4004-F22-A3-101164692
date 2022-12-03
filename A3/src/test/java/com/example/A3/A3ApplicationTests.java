@@ -155,10 +155,11 @@ class A3ApplicationTests {
 	void row58(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
-		game.drawUpTo3(new String[]{"6C"});
+		game.drawUpTo3("6C");
+		game.playCard("6C");
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H"));
-		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("6C"));
 	}
 
@@ -166,10 +167,12 @@ class A3ApplicationTests {
 	void row59(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
-		game.drawUpTo3(new String[]{"6D","5C"});
+		game.drawUpTo3("6D");
+		game.drawUpTo3("5C");
+		game.playCard("5C");
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D"));
-		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("5C"));
 
 	}
@@ -178,10 +181,13 @@ class A3ApplicationTests {
 	void row60(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
-		game.drawUpTo3(new String[]{"6D","5S","7H"});
+		game.drawUpTo3("6D");
+		game.drawUpTo3("5S");
+		game.drawUpTo3("7H");
+		game.playCard("7H");
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
-		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("7H"));
 
 	}
@@ -190,10 +196,12 @@ class A3ApplicationTests {
 	void row61(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
-		game.drawUpTo3(new String[]{"6D","5S","4H"});
+		game.drawUpTo3("6D");
+		game.drawUpTo3("5S");
+		game.drawUpTo3("4H");
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S","4H"));
-		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("7C"));
 
 	}
@@ -201,10 +209,13 @@ class A3ApplicationTests {
 	void row62(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
-		game.drawUpTo3(new String[]{"6D","5S","8H"});
+		game.drawUpTo3("6D");
+		game.drawUpTo3("5S");
+		game.drawUpTo3("8H");
+		game.playCard("8H");
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
-		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("8H"));
 	}
 
@@ -212,10 +223,11 @@ class A3ApplicationTests {
 	void row63(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("KS","3C")));
 		game.setCurrentTopCard("7C");
-		game.drawUpTo3(new String[]{"6C"});
+		game.drawUpTo3("6C");
+		game.playCard("6C");
 
 		ArrayList<String> expected = new ArrayList<>(List.of("KS","3C"));
-		assertEquals(game.getPlayers().get(0).getHand(), expected);
+		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("6C"));
 	}
 

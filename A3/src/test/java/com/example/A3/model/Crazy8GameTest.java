@@ -43,11 +43,18 @@ class Crazy8GameTest {
 
     @Test
     void drawCard() {
-        ArrayList<String> cards = game.getDeck();
-        assertNotNull(game.drawCard(null));
-        assertEquals("AC",game.drawCard("AC"));
-        assertNull(game.drawCard("AX"));
-        assertFalse(cards.contains("AC"));
+        String result = game.drawCard(null);
+        assertNotNull(result);
+
+        game = new Crazy8Game(players);
+        result = game.drawCard("AC");
+        assertEquals("AC",result);
+        assertFalse(game.getDeck().contains("AC"));
+
+        game = new Crazy8Game(players);
+        result = game.drawCard("AX");
+        assertNull(result);
+
     }
 
     @Test
@@ -439,11 +446,26 @@ class Crazy8GameTest {
     void drawUpTo3() {
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3S","6D")));
         game.setCurrentTopCard("5H");
-        game.drawUpTo3(new String[]{"KS","7D","5S"});
+        assertEquals("KS",game.drawUpTo3("KS"));
+        assertEquals(1,game.getPlayers().get(0).getDrawCounter());
+        assertEquals("7D",game.drawUpTo3("7D"));
+        assertEquals(2,game.getPlayers().get(0).getDrawCounter());
+        assertEquals("5S",game.drawUpTo3("5S"));
+        assertEquals(3,game.getPlayers().get(0).getDrawCounter());
+        game.playCard("5S");
+        assertEquals(0,game.getPlayers().get(0).getDrawCounter());
         assertTrue(game.getPlayers().get(0).getHand().equals(new ArrayList<>(List.of("3S","6D","KS","7D"))));
 
         game.getPlayers().get(1).setHand(new ArrayList<>(List.of("3H","6D")));
-        game.drawUpTo3(new String[]{"QH","9D","9H","AH"});
+        assertEquals("QH",game.drawUpTo3("QH"));
+        assertEquals(1,game.getPlayers().get(1).getDrawCounter());
+        assertEquals("9D",game.drawUpTo3("9D"));
+        assertEquals(2,game.getPlayers().get(1).getDrawCounter());
+        assertEquals("9H",game.drawUpTo3("9H"));
+        assertEquals(3,game.getPlayers().get(1).getDrawCounter());
+        assertEquals("Max number of cards drawn, no more allowed",game.drawUpTo3("AH"));
+
+
         assertTrue(game.getCurrentTopCard()=="5S");
         assertTrue(game.getPlayers().get(1).getHand().equals(new ArrayList<>(List.of("3H","6D","QH","9D","9H"))));
 

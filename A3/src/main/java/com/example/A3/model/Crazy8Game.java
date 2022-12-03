@@ -14,6 +14,7 @@ public class Crazy8Game {
     private boolean plus2Played = false;
     private int plus2Stack = 0;
 
+
     public Crazy8Game(ArrayList<Player> players){
         this.players = players;
         generateDeck();
@@ -96,10 +97,12 @@ public class Crazy8Game {
             plus2Stack += 2;
         }
         currentTopCard = card;
+        players.get(currPlayerIndex).setDrawCounter(0);
         turnFinished();
 
 
     }
+
 
     // player plays another 2 card after a 2 was played, so he does not +2 cards but the next player does
     public void respondWith2Card(String card,String[] riggedCard){
@@ -251,36 +254,21 @@ public class Crazy8Game {
         p.setScore(p.getScore()+total);
     }
 
-    public String[] drawUpTo3(String[] riggedCards){
-        String[] drewCards = new String[3];
+    public String drawUpTo3(String riggedCard){
+        if(players.get(currPlayerIndex).getDrawCounter()<3) {
+            if (riggedCard != null) {
+                playerDrawCard(players.get(currPlayerIndex), riggedCard);
+                players.get(currPlayerIndex).setDrawCounter(players.get(currPlayerIndex).getDrawCounter() + 1);
+                return riggedCard;
 
-        if(riggedCards!=null){
-
-            for (int i = 0; i < 3; i++) {
-                playerDrawCard(players.get(currPlayerIndex), riggedCards[i]);
-                drewCards[i] = showLastCard(players.get(currPlayerIndex));
-                if (hasPlayableCard(players.get(currPlayerIndex))) {
-
-                    ArrayList<String> playerHand = players.get(currPlayerIndex).getHand();
-                    playCard(playerHand.get(playerHand.size()-1));
-                    break;
-                }
-            }
-
-        }else {
-
-            for (int i = 0; i < 3; i++) {
+            } else {
                 playerDrawCard(players.get(currPlayerIndex), null);
-                drewCards[i] = showLastCard(players.get(currPlayerIndex));
-                if (hasPlayableCard(players.get(currPlayerIndex))) {
-                    ArrayList<String> playerHand = players.get(currPlayerIndex).getHand();
-                    playCard(playerHand.get(playerHand.size()-1));
-                    break;
-                }
+                players.get(currPlayerIndex).setDrawCounter(players.get(currPlayerIndex).getDrawCounter() + 1);
+                return showLastCard(players.get(currPlayerIndex));
+
             }
         }
-
-        return drewCards;
+        return "Max number of cards drawn, no more allowed";
     }
 
 
