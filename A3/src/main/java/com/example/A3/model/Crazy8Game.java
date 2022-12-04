@@ -104,16 +104,16 @@ public class Crazy8Game {
         currentTopCard = card;
         players.get(currPlayerIndex).setDrawCounter(0);
 
-
-
     }
 
 
     // player plays another 2 card after a 2 was played, so he does not +2 cards but the next player does
     public void respondWith2Card(String[] cards,String[] riggedCard){
         if(cards == null){
+
             for(int i=0;i<plus2Stack;i++){
                 playerDrawCard(players.get(currPlayerIndex),riggedCard[i]);
+
             }
         }else{
             if(cards[0].charAt(0)!='2'){
@@ -281,21 +281,24 @@ public class Crazy8Game {
         p.setScore(p.getScore()+total);
     }
 
-    public String drawUpTo3(String riggedCard){
-        if(players.get(currPlayerIndex).getDrawCounter()<3) {
-            if (riggedCard != null) {
-                playerDrawCard(players.get(currPlayerIndex), riggedCard);
-                players.get(currPlayerIndex).setDrawCounter(players.get(currPlayerIndex).getDrawCounter() + 1);
-                return riggedCard;
+    public String[] drawUpTo3(String[] riggedCards){
+        plus2Played = false;
+        String[] drewCards = new String[3];
 
-            } else {
-                playerDrawCard(players.get(currPlayerIndex), null);
-                players.get(currPlayerIndex).setDrawCounter(players.get(currPlayerIndex).getDrawCounter() + 1);
-                return showLastCard(players.get(currPlayerIndex));
+            for (int i = 0; i < 3; i++) {
+                ArrayList<String> playerHand = players.get(currPlayerIndex).getHand();
+                playerDrawCard(players.get(currPlayerIndex), riggedCards[i]);
+                drewCards[i] = playerHand.get(playerHand.size()-1);
 
+                if (hasPlayableCard(players.get(currPlayerIndex))) {
+                    playCard(playerHand.get(playerHand.size()-1));
+                    turnFinished();
+                    return drewCards;
+                }
             }
-        }
-        return "Max number of cards drawn, no more allowed";
+        plus2Played = true;
+        turnFinished();
+        return drewCards;
     }
 
 

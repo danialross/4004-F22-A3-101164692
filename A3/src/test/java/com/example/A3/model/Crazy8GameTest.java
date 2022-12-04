@@ -474,29 +474,16 @@ class Crazy8GameTest {
     void drawUpTo3() {
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3S","6D")));
         game.setCurrentTopCard("5H");
-        assertEquals("KS",game.drawUpTo3("KS"));
-        assertEquals(1,game.getPlayers().get(0).getDrawCounter());
-        assertEquals("7D",game.drawUpTo3("7D"));
-        assertEquals(2,game.getPlayers().get(0).getDrawCounter());
-        assertEquals("5S",game.drawUpTo3("5S"));
-        assertEquals(3,game.getPlayers().get(0).getDrawCounter());
-        game.playCard("5S");
-        game.turnFinished();
-        assertEquals(0,game.getPlayers().get(0).getDrawCounter());
+
+        assertArrayEquals(new String[]{"KS","7D","5S"},game.drawUpTo3(new String[]{"KS","7D","5S"}));
         assertTrue(game.getPlayers().get(0).getHand().equals(new ArrayList<>(List.of("3S","6D","KS","7D"))));
 
-        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("3H","6D")));
-        assertEquals("QH",game.drawUpTo3("QH"));
-        assertEquals(1,game.getPlayers().get(1).getDrawCounter());
-        assertEquals("9D",game.drawUpTo3("9D"));
-        assertEquals(2,game.getPlayers().get(1).getDrawCounter());
-        assertEquals("9H",game.drawUpTo3("9H"));
-        assertEquals(3,game.getPlayers().get(1).getDrawCounter());
-        assertEquals("Max number of cards drawn, no more allowed",game.drawUpTo3("AH"));
 
 
-        assertTrue(game.getCurrentTopCard()=="5S");
-        assertTrue(game.getPlayers().get(1).getHand().equals(new ArrayList<>(List.of("3H","6D","QH","9D","9H"))));
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("3C","6D")));
+        assertArrayEquals(new String[]{"QC","9D","9C"},game.drawUpTo3(new String[]{"QC","9D","9C"}));
+
+        assertTrue(game.getPlayers().get(1).getHand().equals(new ArrayList<>(List.of("3C","6D","QC","9D","9C"))));
 
     }
 
