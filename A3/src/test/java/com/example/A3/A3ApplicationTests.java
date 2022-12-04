@@ -341,10 +341,17 @@ class A3ApplicationTests {
 
 	@Test
 	void row77(){
-		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AS")));
-		game.getPlayers().get(1).setHand(new ArrayList<>());
-		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("8H","JH","6H","KH","KS")));
-		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("8C", "8D", "2D")));
+		game.playerDrawCard(game.getPlayers().get(0),"AS");
+
+		game.playerDrawCard(game.getPlayers().get(2),"8H");
+		game.playerDrawCard(game.getPlayers().get(2),"JH");
+		game.playerDrawCard(game.getPlayers().get(2),"6H");
+		game.playerDrawCard(game.getPlayers().get(2),"KH");
+		game.playerDrawCard(game.getPlayers().get(2),"KS");
+
+		game.playerDrawCard(game.getPlayers().get(3),"8C");
+		game.playerDrawCard(game.getPlayers().get(3),"8D");
+		game.playerDrawCard(game.getPlayers().get(3),"2D");
 
 		assertThat(game.endGame(),is(
     	"""

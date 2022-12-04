@@ -59,13 +59,14 @@ class Crazy8GameTest {
 
     @Test
     void playerDrawCard() {
-
-        game.playerDrawCard(game.getPlayers().get(0),null);
+        game.playerDrawCard(game.getPlayers().get(0),"KS");
         assertEquals(1,game.getPlayers().get(0).getHand().size());
+        assertEquals("KS",game.getPlayers().get(0).getHand().get(0));
 
-        game.playerDrawCard(game.getPlayers().get(1),"KS");
+        game.playerDrawCard(game.getPlayers().get(1),null);
         assertEquals(1,game.getPlayers().get(1).getHand().size());
-        assertEquals("KS",game.getPlayers().get(1).getHand().get(0));
+
+
     }
 
     @Test
