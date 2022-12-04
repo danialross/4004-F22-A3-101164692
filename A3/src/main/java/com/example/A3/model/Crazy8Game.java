@@ -145,13 +145,19 @@ public class Crazy8Game {
         }
     }
 
-    public void setupNextRound(){
+    public void setupNextRound(String firstCard){
+        direction = 1;
+        plus2Played = false;
+        plus2Stack = 0;
+
         generateDeck();
         Collections.shuffle(deck);
         currentFirstPlayer++;
         if(currentFirstPlayer == 4 ){
             currentFirstPlayer = 0;
         }
+        currPlayerIndex = currentFirstPlayer;
+        dealerDrawCard(firstCard);
     }
 
     // return current direction as left or right

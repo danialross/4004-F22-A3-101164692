@@ -495,14 +495,19 @@ class Crazy8GameTest {
     @Test
     void setupNextRound() {
         assertEquals(0,game.getCurrentFirstPlayer());
-        game.setupNextRound();
+        game.setupNextRound(null);
         assertEquals(1,game.getCurrentFirstPlayer());
-        game.setupNextRound();
+        game.setupNextRound(null);
         assertEquals(2,game.getCurrentFirstPlayer());
-        game.setupNextRound();
+        game.setupNextRound(null);
         assertEquals(3,game.getCurrentFirstPlayer());
-        game.setupNextRound();
+        game.setupNextRound(null);
         assertEquals(0,game.getCurrentFirstPlayer());
+
+        assertEquals(1,game.getDirection());
+        assertFalse(game.isPlus2Played());
+        assertEquals(0,game.getPlus2Stack());
+        assertNotNull(game.getCurrentTopCard());
 
 
     }
