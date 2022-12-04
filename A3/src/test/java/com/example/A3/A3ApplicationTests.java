@@ -346,15 +346,17 @@ class A3ApplicationTests {
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("8H","JH","6H","KH","KS")));
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("8C", "8D", "2D")));
 
-		System.out.println(game.showScores());
-		assertThat(game.didFinishRound(),is(true));
-		assertThat(game.showScores(),is("""
-				 --Player scores--
-                p1 : 1 Points
-                p2 : 0 Points
-                p3 : 86 Points
-                p4 : 102 Points
-                """));
+		assertThat(game.endGame(),is(
+    	"""
+		Round has Ended
+		--Player scores--
+		p1 : 1 Points
+		p2 : 0 Points
+		p3 : 86 Points
+		p4 : 102 Points
+		Game has Ended
+		p2 is the Winner!
+		"""));
 
 	}
 }

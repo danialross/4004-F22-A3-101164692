@@ -541,7 +541,7 @@ class Crazy8GameTest {
         assertEquals("2H",game.getCurrentTopCard());
         assertTrue(game.isPlus2Played());
 
-        game.playRound(null,new String[]{"7H","9H","10H","JH"},null,new String[]{null,null,null},null);
+        game.playRound(null,new String[]{"7H","9H","10H","JH"},null,new String[]{"3C","4C","5C"},null);
 
         assertFalse(game.playRound("4S",null,null,null,null));
     }
