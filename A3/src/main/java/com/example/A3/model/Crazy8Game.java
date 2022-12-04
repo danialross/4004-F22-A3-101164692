@@ -108,6 +108,20 @@ public class Crazy8Game {
 
     // plays a single round
     public void playRound(String card,String[] riggedDraws,String[] respond2Cards){
+        if(plus2Played){
+            respondWith2Card(respond2Cards,riggedDraws);
+            return;
+        }
+
+        // null card means player does not have a card to play
+        if(card == null){
+            drawUpTo3(riggedDraws);
+
+        } else{
+            playCard(card);
+        }
+
+        turnFinished();
     }
 
 
