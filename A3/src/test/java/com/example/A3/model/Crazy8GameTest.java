@@ -70,11 +70,19 @@ class Crazy8GameTest {
 
     @Test
     void dealPlayerCards() {
+        String[][] riggedcards = new String[][]{
+                {"4H", "7S", "5D", "6D", "9D"},
+                {"4S", "6S", "KC", "8H", "10D"},
+                {"9S", "6C", "9C", "JD", "3H"},
+                {"7D", "JH", "QH", "KH", "5C"}};
 
-        game.dealPlayerCards();
-        for (Player player : players) {
-            assertEquals(5, player.getHand().size());
-        }
+        game.dealPlayerCards(riggedcards);
+
+        assertEquals(new ArrayList<>(List.of("4H", "7S", "5D", "6D", "9D")), game.getPlayers().get(0).getHand());
+        assertEquals(new ArrayList<>(List.of("4S", "6S", "KC", "8H", "10D")), game.getPlayers().get(1).getHand());
+        assertEquals(new ArrayList<>(List.of("9S", "6C", "9C", "JD", "3H")), game.getPlayers().get(2).getHand());
+        assertEquals(new ArrayList<>(List.of("7D", "JH", "QH", "KH", "5C")), game.getPlayers().get(3).getHand());
+
         assertEquals(32,game.getDeck().size());
     }
 

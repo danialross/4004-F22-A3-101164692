@@ -78,10 +78,10 @@ public class Crazy8Game {
         return p.getHand().get(p.getHand().size()-1) + " was drew";
     }
 
-    public void dealPlayerCards(){
-        for (Player player : players) {
+    public void dealPlayerCards(String[][] playercards){
+        for (int i = 0; i < players.size(); i++) {
             for (int j = 0; j < 5; j++) {
-                playerDrawCard(player, null);
+                playerDrawCard(players.get(i), playercards[i][j]);
             }
         }
     }
