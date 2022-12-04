@@ -20,6 +20,7 @@ import java.util.Arrays;
 public class ChatController {
     ArrayList<Player> players = new ArrayList<>();
     Crazy8Game game;
+    boolean waitingForResponse = false;
 
     @Autowired
     private SimpMessageSendingOperations sendingOperations;
@@ -35,6 +36,13 @@ public class ChatController {
             //accept only 2 or 5
             //reject everything else
             String[] response = new String[2];
+            System.out.println(chatMessage.getContent().length());
+
+            if(waitingForResponse && chatMessage.getContent().length()==2){
+                waitingForResponse = false;
+                game.changeSuit(chatMessage.getContent());
+            }
+
             if(chatMessage.getContent().length()!=5 && chatMessage.getContent().length()!=2 ){
                 sendInvalidInputError();
                 System.out.println("!5 ||  !2");
@@ -62,7 +70,7 @@ public class ChatController {
                 response[0] = chatMessage.getContent();
             }
 
-            while (!game.didReachWinningThreshold()) {
+            if (!game.didReachWinningThreshold()) {
                 if (game.isPlus2Played()) {
                     if (response[1] != null) {
                         game.playRound(null, null, response, null, null);
@@ -70,7 +78,15 @@ public class ChatController {
                         game.playRound(null, new String[game.getPlus2Stack()], response, new String[]{null, null, null}, null);
                     }
                 } else {
-                    game.playRound(response[0], null, null, null, null);
+                    if(chatMessage.getContent().contains("8")){
+                        dealerSendMessagetoUser(game.getPlayers().get(game.getCurrPlayerIndex()).getUser().getName(), game.requestAction(1));
+                        game.playRound(response[0], null, null, null, null);
+                        game.setCurrPlayerIndex(game.getCurrPlayerIndex()-1);
+                        waitingForResponse = true;
+                        return;
+                    }else{
+                        game.playRound(response[0], null, null, null, null);
+                    }
                 }
 
                 if(game.getCurrentTopCard().charAt(0) == 'A'){
@@ -81,8 +97,11 @@ public class ChatController {
                     dealerBroadcastMessage(game.notifyAction(4));
                 }
                 sendCurrentCardAndTurn();
+                sendPlayerHand();
+            }else{
+                dealerBroadcastMessage(game.endGame());
             }
-            dealerBroadcastMessage(game.endGame());
+
 
         }else{
             for(Player p: players){
@@ -114,12 +133,8 @@ public class ChatController {
             Player currentPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
 
             if(!game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex()))){
-                if(game.isPlus2Played()){
-                    game.respondWith2Card(null,new String[]{null,null});
-                }else{
-                    dealerSendMessagetoUser(currentPlayer.getUser().getName(),"player drew : " + game.drawUpTo3(new String[]{null,null,null}).toString());
-                }
-                sendingOperations.convertAndSendToUser(currentPlayer.getUser().getName(), "/topic/private.messages",currentPlayer.getHand());
+                dealerSendMessagetoUser(currentPlayer.getUser().getName(),"player drew : " + game.drawUpTo3(new String[]{null,null,null}).toString());
+                dealerSendMessagetoUser(currentPlayer.getUser().getName(),currentPlayer.getHand().toString());
             }
         }
     }
