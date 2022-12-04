@@ -529,11 +529,12 @@ class Crazy8GameTest {
     void playRound() {
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
         game.getPlayers().get(1).setHand(new ArrayList<>(List.of("6H")));
+        game.setCurrentTopCard("3C");
 
         //non2s
         game.playRound("2C",null,null,null,null);
         //2s
-        game.playRound(null,new String[]{"9H","5H"},null,new String[]{"3H","4H","2H"},"2H");
+        game.playRound(null,new String[]{"9H","5H"},null,new String[]{"3H","4H","2H"},null);
 
         assertEquals(4,game.getPlus2Stack());
         assertEquals(2,game.getCurrPlayerIndex());
@@ -541,6 +542,7 @@ class Crazy8GameTest {
         assertTrue(game.isPlus2Played());
 
         game.playRound(null,new String[]{"7H","9H","10H","JH"},null,new String[]{null,null,null},null);
-        assertEquals(3,game.getCurrPlayerIndex());
+
+        assertFalse(game.playRound("4S",null,null,null,null));
     }
 }

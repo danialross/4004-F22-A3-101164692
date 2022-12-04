@@ -107,19 +107,40 @@ public class Crazy8Game {
     }
 
     // plays a single round
-    public void playRound(String card,String[] rigged2Draws,String[] respond2Cards,String[] riggedRegular, String cardAfterDraws){
+    public boolean playRound(String card,String[] rigged2Draws,String[] respond2Cards,String[] riggedRegular, String cardAfterDraws){
+
         if(plus2Played){
-            respondWith2Card(respond2Cards,rigged2Draws);
+            if(respond2Cards == null){
+                respondWith2Card(null,rigged2Draws);
+            }else if(respond2Cards.length == 2){
+                if( canPlay(respond2Cards[0]) && canPlay(respond2Cards[1])) {
+                    respondWith2Card(respond2Cards,rigged2Draws);
+                }else{
+                    return false;
+                }
+            }else if(respond2Cards.length == 1){
+                if(canPlay(respond2Cards[0])){
+                    respondWith2Card(respond2Cards,rigged2Draws);
+                }
+
+            }
+
             if(cardAfterDraws != null){
-                playCard(cardAfterDraws);
-                turnFinished();
+                if(canPlay(cardAfterDraws)){
+                    playCard(cardAfterDraws);
+                    turnFinished();
+                    return true;
+                }else{
+                    return false;
+                }
+
             }else{
                 if(respond2Cards!=null){
-                    return;
+                    return true;
                 }
                 drawUpTo3(riggedRegular);
             }
-            return;
+            return true;
         }
 
         // null card means player does not have a card to play
@@ -127,10 +148,16 @@ public class Crazy8Game {
             drawUpTo3(riggedRegular);
 
         } else{
-            playCard(card);
+            if(canPlay(card)){
+                playCard(card);
+            }else{
+                return false;
+            }
+
         }
 
         turnFinished();
+        return true;
     }
 
 

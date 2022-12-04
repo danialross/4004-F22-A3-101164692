@@ -2,7 +2,6 @@ package com.example.A3;
 
 import com.example.A3.model.Crazy8Game;
 import com.example.A3.model.Player;
-import org.assertj.core.util.VisibleForTesting;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +27,7 @@ class A3ApplicationTests {
 	@Test
 	void row41() {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3C")));
+		game.setCurrentTopCard("4C");
 
 		game.playRound("3C",null,null,null,null);
 		assertThat(game.getCurrPlayerIndex(), is(1));
@@ -38,6 +38,7 @@ class A3ApplicationTests {
 	void row42() {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AH")));
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("7H")));
+		game.setCurrentTopCard("4H");
 
 		game.playRound("AH",null,null,null,null);
 		assertThat(game.notifyAction(2),is("an Ace was played, the direction has been reversed"));
@@ -52,6 +53,7 @@ class A3ApplicationTests {
 	@Test
 	void row44(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QC")));
+		game.setCurrentTopCard("4C");
 
 		game.playRound("QC",null,null,null,null);
 		assertThat(game.notifyAction(3),is("a Queen was played, the next player's turn has been skipped"));
@@ -64,6 +66,7 @@ class A3ApplicationTests {
 		//setting p4 as current player
 		game.setCurrPlayerIndex(3);
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C")));
+		game.setCurrentTopCard("4C");
 
 		game.playRound("3C",null,null,null,null);
 		assertThat(this.game.getCurrPlayerIndex(), is(0));
@@ -74,8 +77,9 @@ class A3ApplicationTests {
 	void row46(){
 		//setting p4 as current player
 		game.setCurrPlayerIndex(3);
-		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("AH")));
+		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("AC")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7H")));
+		game.setCurrentTopCard("4C");
 
 		game.playRound("AC",null,null,null,null);
 		assertThat(this.game.getCurrPlayerIndex(), is(2));
@@ -83,7 +87,7 @@ class A3ApplicationTests {
 		assertThat(game.showDirection(),is("Current Direction is Right"));
 
 		game.playRound("7H",null,null,null,null);
-		assertThat(this.game.getCurrPlayerIndex(), is(1));
+		assertThat(this.game.getCurrPlayerIndex(), is(2));
 
 	}
 
@@ -92,6 +96,7 @@ class A3ApplicationTests {
 		//setting p4 as current player
 		game.setCurrPlayerIndex(3);
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("QC")));
+		game.setCurrentTopCard("4C");
 
 		game.playRound("QC",null,null,null,null);
 		assertThat(game.notifyAction(3),is("a Queen was played, the next player's turn has been skipped"));
@@ -103,6 +108,7 @@ class A3ApplicationTests {
 	void row51(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("KH")));
 		game.setCurrentTopCard("KC");
+		game.setCurrentTopCard("4H");
 
 		assertThat(game.canPlay("KH"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("KH")),is(""));
@@ -126,7 +132,7 @@ class A3ApplicationTests {
 	@Test
 	void row53(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("8H")));
-		game.setCurrentTopCard("KC");
+		game.setCurrentTopCard("KH");
 
 		assertThat(game.canPlay("8H"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("8H")),is(""));
@@ -144,8 +150,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("5S")));
 		game.setCurrentTopCard("KC");
 
-		assertThat(game.canPlay("5S"),is(false));
-		assertThat(game.repromptForCard(game.canPlay("5S")),is("The card you selected cannot be played, input another card"));
+		assertThat(game.repromptForCard(game.playRound("5S",null,null,null,null)), is("The card you selected cannot be played, input another card"));
 
 		assertThat(game.getCurrentTopCard(),is("KC"));
 		assertThat(game.getPlayers().get(0).getHand().get(0),is("5S"));
@@ -225,6 +230,7 @@ class A3ApplicationTests {
 	void row67(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
+		game.setCurrentTopCard("3C");
 
 		game.playRound("2C",null,null,null,null);
 
@@ -241,6 +247,7 @@ class A3ApplicationTests {
 	void row68(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
+		game.setCurrentTopCard("3C");
 
 		game.playRound("2C",null,null,null,null);
 
@@ -258,6 +265,7 @@ class A3ApplicationTests {
 	void row69(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
+		game.setCurrentTopCard("3C");
 
 		game.playRound("2C",null,null,null,null);
 
@@ -277,6 +285,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
+		game.setCurrentTopCard("3C");
 
 		game.playRound("2C",null,null,null,null);
 
@@ -298,6 +307,8 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4C","6C","9D")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
+		game.setCurrentTopCard("3C");
+
 		game.playRound("2C",null,null,null,null);
 
 		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(true));
@@ -317,6 +328,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4C","6C")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("4S")));
+		game.setCurrentTopCard("3C");
 
 		game.playRound("2C",null,null,null,null);
 
