@@ -304,6 +304,26 @@ public class Crazy8Game {
         return false;
     }
 
+
+    //a players finishes their hand or reaches 100 points
+    public String endGame(){
+        String score = "" ;
+        if(didFinishRound()) {
+            for (int i = 0; i < players.size(); i++) {
+                calculateHand(players.get(i));
+            }
+            score += "Round has Ended\n";
+        }
+        score += showScores();
+
+        if(didReachWinningThreshold()){
+            score += "Game has Ended\n";
+            score += getWinner().getName() + " is the Winner!\n";
+        }
+        return score;
+    }
+
+
     public boolean isRoundUnplayable(){
         for (Player player : players) {
             if (hasPlayableCard(player)) {
