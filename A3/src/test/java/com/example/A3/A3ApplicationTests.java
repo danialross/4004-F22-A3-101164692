@@ -2,6 +2,7 @@ package com.example.A3;
 
 import com.example.A3.model.Crazy8Game;
 import com.example.A3.model.Player;
+import org.assertj.core.util.VisibleForTesting;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,13 +24,12 @@ class A3ApplicationTests {
 			new Player(null,"p2"),
 			new Player(null,"p3"),
 			new Player(null,"p4")));
-	Crazy8Game game = new Crazy8Game(players);;
+	Crazy8Game game = new Crazy8Game(players);
 	@Test
 	void row41() {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3C")));
 
-		game.playCard("3C");
-		game.turnFinished();
+		game.playRound("3C",null,null,null,null);
 		assertThat(game.getCurrPlayerIndex(), is(1));
 
 	}
@@ -39,14 +39,12 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AH")));
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("7H")));
 
-		game.playCard("AH");
-		game.turnFinished();
+		game.playRound("AH",null,null,null,null);
 		assertThat(game.notifyAction(2),is("an Ace was played, the direction has been reversed"));
 		assertThat(game.showDirection(),is("Current Direction is Right"));
 		assertThat(this.game.getCurrPlayerIndex(), is(3));
 
-		game.playCard("7H");
-		game.turnFinished();
+		game.playRound("7H",null,null,null,null);
 		assertThat(game.getCurrPlayerIndex(),is(2));
 
 	}
@@ -55,8 +53,7 @@ class A3ApplicationTests {
 	void row44(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("QC")));
 
-		game.playCard("QC");
-		game.turnFinished();
+		game.playRound("QC",null,null,null,null);
 		assertThat(game.notifyAction(3),is("a Queen was played, the next player's turn has been skipped"));
 		assertThat(this.game.getCurrPlayerIndex(), is(2));
 
@@ -68,8 +65,7 @@ class A3ApplicationTests {
 		game.setCurrPlayerIndex(3);
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C")));
 
-		game.playCard("3C");
-		game.turnFinished();
+		game.playRound("3C",null,null,null,null);
 		assertThat(this.game.getCurrPlayerIndex(), is(0));
 
 	}
@@ -81,14 +77,12 @@ class A3ApplicationTests {
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("AH")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7H")));
 
-		game.playCard("AC");
-		game.turnFinished();
+		game.playRound("AC",null,null,null,null);
 		assertThat(this.game.getCurrPlayerIndex(), is(2));
 		assertThat(game.notifyAction(2),is("an Ace was played, the direction has been reversed"));
 		assertThat(game.showDirection(),is("Current Direction is Right"));
 
-		game.playCard("7H");
-		game.turnFinished();
+		game.playRound("7H",null,null,null,null);
 		assertThat(this.game.getCurrPlayerIndex(), is(1));
 
 	}
@@ -99,8 +93,7 @@ class A3ApplicationTests {
 		game.setCurrPlayerIndex(3);
 		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("QC")));
 
-		game.playCard("QC");
-		game.turnFinished();
+		game.playRound("QC",null,null,null,null);
 		assertThat(game.notifyAction(3),is("a Queen was played, the next player's turn has been skipped"));
 		assertThat(this.game.getCurrPlayerIndex(), is(1));
 
@@ -113,8 +106,7 @@ class A3ApplicationTests {
 
 		assertThat(game.canPlay("KH"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("KH")),is(""));
-		game.playCard("KH");
-		game.turnFinished();
+		game.playRound("KH",null,null,null,null);
 		assertThat(game.getCurrentTopCard(),is("KH"));
 		assertThat(game.getPlayers().get(0).getHand(), Matchers.empty());
 
@@ -127,8 +119,7 @@ class A3ApplicationTests {
 
 		assertThat(game.canPlay("7C"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("7C")),is(""));
-		game.playCard("7C");
-		game.turnFinished();
+		game.playRound("7C",null,null,null,null);
 		assertThat(game.getCurrentTopCard(),is("7C"));
 		assertThat(game.getPlayers().get(0).getHand(), Matchers.empty());
 	}
@@ -139,8 +130,7 @@ class A3ApplicationTests {
 
 		assertThat(game.canPlay("8H"),is(true));
 		assertThat(game.repromptForCard(game.canPlay("8H")),is(""));
-		game.playCard("8H");
-		game.turnFinished();
+		game.playRound("8H",null,null,null,null);
 
 		//controller will say if 2 or 8 card plays a response from the user will be asked
 		assertThat(game.requestAction(1),is("Select a new suit.(D/C/H/S)"));
@@ -167,7 +157,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
 
-		game.drawUpTo3(new String[]{"6C"});
+		game.playRound(null,null,null,new String[]{"6C"},null);
 		ArrayList<String> expected = new ArrayList<>(List.of("3H"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("6C"));
@@ -178,7 +168,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
 
-		game.drawUpTo3(new String[]{"6D","5C"});
+		game.playRound(null,null,null,new String[]{"6D","5C"},null);
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("5C"));
@@ -190,8 +180,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
 
-		game.drawUpTo3(new String[]{"6D","5S","7H"});
-
+		game.playRound(null,null,null,new String[]{"6D","5S","7H"},null);
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("7H"));
@@ -203,7 +192,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
 
-		game.drawUpTo3(new String[]{"6D","5S","4H"});
+		game.playRound(null,null,null,new String[]{"6D","5S","4H"},null);
 
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S","4H"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
@@ -215,7 +204,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3H")));
 		game.setCurrentTopCard("7C");
 
-		game.drawUpTo3(new String[]{"6D","5S","8H"});
+		game.playRound(null,null,null,new String[]{"6D","5S","8H"},null);
 		ArrayList<String> expected = new ArrayList<>(List.of("3H","6D","5S"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("8H"));
@@ -226,7 +215,7 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("KS","3C")));
 		game.setCurrentTopCard("7C");
 
-		game.drawUpTo3(new String[]{"6C"});
+		game.playRound(null,null,null,new String[]{"6C"},null);
 		ArrayList<String> expected = new ArrayList<>(List.of("KS","3C"));
 		assertEquals(expected,game.getPlayers().get(0).getHand());
 		assertThat(game.getCurrentTopCard(),is("6C"));
@@ -237,13 +226,10 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
 
-		game.playCard("2C");
-		game.turnFinished();
+		game.playRound("2C",null,null,null,null);
 
 		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.respondWith2Card(null,new String[]{"6C","9D"});
-		game.playCard("6C");
-		game.turnFinished();
+		game.playRound(null,new String[]{"6C","9D"},null,null,"6C");
 
 		ArrayList<String> expected = new ArrayList<>(List.of("4H","9D"));
 		assertEquals(expected,game.getPlayers().get(1).getHand());
@@ -256,14 +242,11 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
 
-		game.playCard("2C");
-		game.turnFinished();
+		game.playRound("2C",null,null,null,null);
 
 		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.respondWith2Card(null,new String[]{"6S","9D"});
+		game.playRound(null,new String[]{"6S","9D"},null,new String[]{"9H","6C"},null);
 
-		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.drawUpTo3(new String[]{"9H","6C"});
 		ArrayList<String> expected = new ArrayList<>(List.of("4H","6S","9D","9H"));
 		assertEquals(expected,game.getPlayers().get(1).getHand());
 
@@ -276,14 +259,10 @@ class A3ApplicationTests {
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
 
-		game.playCard("2C");
-		game.turnFinished();
+		game.playRound("2C",null,null,null,null);
 
 		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.respondWith2Card(null,new String[]{"6S","9D"});
-
-		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.drawUpTo3(new String[]{"9H","7S","5H"});
+		game.playRound(null,new String[]{"6S","9D"},null,new String[]{"9H","7S","5H"},null);
 
 		ArrayList<String> expected = new ArrayList<>(List.of("4H","6S","9D","9H","7S","5H"));
 		assertEquals(expected,game.getPlayers().get(1).getHand());
@@ -299,67 +278,63 @@ class A3ApplicationTests {
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4H")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
 
-		game.playCard("2C");
-		game.turnFinished();
+		game.playRound("2C",null,null,null,null);
 
 		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.respondWith2Card(null,new String[]{"2H","9D"});
-		game.playCard("2H");
-		game.turnFinished();
+		game.playRound(null,new String[]{"2H","9D"},null,null,"2H");
 
 		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.respondWith2Card(null,new String[]{"5S","6D", "6H","7C"});
 
+		game.playRound(null,new String[]{"5S","6D", "6H","7C"},null,null,"6H");
 
-
-		assertEquals(4,game.getPlus2Stack());
-		assertThat(game.getCurrPlayerIndex(),is(2));
+		assertThat(game.getCurrPlayerIndex(),is(3));
 
 
 	}
 
 	//p1 plays 2C, p2 has {4C, 6C, 9D} then p2 plays 4C and 6C (ie 2 legal cards) and ends their turn
+	@Test
 	void row72(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4C","6C","9D")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
-		game.playCard("2C");
-		game.turnFinished();
+		game.playRound("2C",null,null,null,null);
 
-		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.respondWith2Card(new String[]{"4C","6C"},null);
+		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(true));
+		game.playRound(null,null,new String[]{"4C","6C"},null,null);
 
 		ArrayList<String> expected = new ArrayList<>(List.of("9D"));
 		assertEquals(expected,game.getPlayers().get(1).getHand());
-		assertThat(game.getCurrPlayerIndex(),is(3));
+		assertThat(game.getCurrPlayerIndex(),is(2));
 
 	}
 
+
 	// p1 plays 2C, p2 has {4C, 6C} then p2 plays 4C and 6C and ends round (because p2 played all their cards)
+	@Test
 	void row73(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
 		game.getPlayers().get(1).setHand(new ArrayList<>(List.of("4C","6C")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7D")));
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("4S")));
-		game.playCard("2C");
-		game.turnFinished();
 
-		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(false));
-		game.respondWith2Card(new String[]{"4C","6C"},null);
-		assertThat(game.didFinishRound(),is(true));
+		game.playRound("2C",null,null,null,null);
+
 		assertThat(game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())),is(true));
-		assertThat(game.getCurrPlayerIndex(),is(3));
-		assertThat(game.getCurrPlayerIndex(),is(3));
+		game.playRound(null,null,new String[]{"4C","6C"},null,null);
+
+		assertThat(game.didFinishRound(),is(true));
 
 	}
 
+	@Test
 	void row77(){
 		game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AS")));
 		game.getPlayers().get(1).setHand(new ArrayList<>());
 		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("8H","JH","6H","KH","KS")));
-		game.getPlayers().get(2).setHand(new ArrayList<>(List.of("8C", "8D", "2D")));
+		game.getPlayers().get(3).setHand(new ArrayList<>(List.of("8C", "8D", "2D")));
 
-		assertThat(game.didFinishRound(),is(true));
+		System.out.println(game.showScores());
 		assertThat(game.didFinishRound(),is(true));
 		assertThat(game.showScores(),is("""
 				 --Player scores--
