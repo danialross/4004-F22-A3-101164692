@@ -62,22 +62,32 @@ public class ChatController {
                 response[0] = chatMessage.getContent();
             }
 
-            final ChatMessage msg = ChatMessage.builder()
-                    .type(MessageType.CHAT)
-                    .sender("Dealer")
-                    .content(Arrays.toString(response))
-                    .build();
-            sendingOperations.convertAndSend("/topic/public",msg);
+            while (!game.didReachWinningThreshold()) {
+                if (game.isPlus2Played()) {
+                    if (response[1] != null) {
+                        game.playRound(null, null, response, null, null);
+                    } else {
+                        game.playRound(null, new String[game.getPlus2Stack()], response, new String[]{null, null, null}, null);
+                    }
+                } else {
+                    game.playRound(response[0], null, null, null, null);
+                }
+
+                if(game.getCurrentTopCard().charAt(0) == 'A'){
+                    dealerBroadcastMessage(game.notifyAction(2));
+                }else if(game.getCurrentTopCard().charAt(0) == 'Q'){
+                    dealerBroadcastMessage(game.notifyAction(3));
+                }else if(game.getCurrentTopCard().charAt(0) == '8'){
+                    dealerBroadcastMessage(game.notifyAction(4));
+                }
+                sendCurrentCardAndTurn();
+            }
+            dealerBroadcastMessage(game.endGame());
 
         }else{
-            final ChatMessage msg = ChatMessage.builder()
-                    .type(MessageType.CHAT)
-                    .sender("Dealer")
-                    .content("It is not your turn")
-                    .build();
             for(Player p: players){
                 if(chatMessage.getSender().equals(p.getName())){
-                    sendingOperations.convertAndSendToUser(p.getUser().getName(), "/topic/private.messages",msg);
+                    dealerSendMessagetoUser("It is not your turn",p.getUser().getName());
                 }
             }
 
@@ -100,13 +110,24 @@ public class ChatController {
 
             sendCurrentCardAndTurn();
             sendPlayerHand();
+
+            Player currentPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
+
+            if(!game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex()))){
+                if(game.isPlus2Played()){
+                    game.respondWith2Card(null,new String[]{null,null});
+                }else{
+                    dealerSendMessagetoUser(currentPlayer.getUser().getName(),"player drew : " + game.drawUpTo3(new String[]{null,null,null}).toString());
+                }
+                sendingOperations.convertAndSendToUser(currentPlayer.getUser().getName(), "/topic/private.messages",currentPlayer.getHand());
+            }
         }
     }
     public void announceGameStart(){
         final ChatMessage msg = ChatMessage.builder()
                 .type(MessageType.CHAT)
                 .sender("Dealer")
-                .content("4 Players Have Joined, Game Is Starting\n\n hi")
+                .content("4 Players Have Joined, Game Is Starting\n")
                 .build();
         sendingOperations.convertAndSend("/topic/public",msg);
     }
@@ -119,6 +140,22 @@ public class ChatController {
         sendingOperations.convertAndSend("/topic/public",msg);
 
 
+    }
+    public void dealerSendMessagetoUser(String content,String username){
+        final ChatMessage msg = ChatMessage.builder()
+                .type(MessageType.CHAT)
+                .sender("Dealer")
+                .content(content)
+                .build();
+        sendingOperations.convertAndSendToUser(username,"/topic/private.messages", msg);
+    }
+    public void dealerBroadcastMessage(String content){
+        final ChatMessage msg = ChatMessage.builder()
+                .type(MessageType.CHAT)
+                .sender("Dealer")
+                .content(content)
+                .build();
+        sendingOperations.convertAndSend("/topic/public", msg);
     }
 
     public void sendPlayerHand(){
