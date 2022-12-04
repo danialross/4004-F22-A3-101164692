@@ -524,4 +524,20 @@ class Crazy8GameTest {
         assertEquals("The card you selected cannot be played, input another card",game.repromptForCard(false));
 
     }
+
+    @Test
+    void playRound() {
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("2H")));
+
+        //non2s
+        game.playRound("2C",null,null);
+        //2s
+        game.playRound(null,new String[]{null,null,null},new String[]{"2H"});
+
+        assertEquals(4,game.getPlus2Stack());
+        assertEquals(2,game.getCurrPlayerIndex());
+        assertEquals("2H",game.getCurrentTopCard());
+        assertTrue(game.isPlus2Played());
+    }
 }

@@ -106,6 +106,10 @@ public class Crazy8Game {
 
     }
 
+    // plays a single round
+    public void playRound(String card,String[] riggedDraws,String[] respond2Cards){
+    }
+
 
     // player plays another 2 card after a 2 was played, so he does not +2 cards but the next player does
     public void respondWith2Card(String[] cards,String[] riggedCard){
