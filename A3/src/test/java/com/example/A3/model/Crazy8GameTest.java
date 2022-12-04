@@ -435,7 +435,7 @@ class Crazy8GameTest {
                 p3 : 0 Points
                 p4 : 0 Points
                 """;
-        System.out.print(expectedString);
+
         assertEquals(expectedString,game.showScores());
 
     }
@@ -544,5 +544,40 @@ class Crazy8GameTest {
         game.playRound(null,new String[]{"7H","9H","10H","JH"},null,new String[]{null,null,null},null);
 
         assertFalse(game.playRound("4S",null,null,null,null));
+    }
+
+    @Test
+    void endGame() {
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("6H","4S")));
+        game.getPlayers().get(2).setHand(new ArrayList<>());
+        game.getPlayers().get(3).setHand(new ArrayList<>(List.of("6H")));
+        assertEquals("""
+                                Round has Ended
+                                --Player scores--
+                                p1 : 2 Points
+                                p2 : 10 Points
+                                p3 : 0 Points
+                                p4 : 6 Points
+                                """,game.endGame());
+
+        game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
+        game.getPlayers().get(1).setHand(new ArrayList<>(List.of("6H","4S")));
+        game.getPlayers().get(2).setHand(new ArrayList<>(List.of()));
+        game.getPlayers().get(3).setHand(new ArrayList<>(List.of("6H")));
+        game.getPlayers().get(0).setScore(0);
+        game.getPlayers().get(1).setScore(90);
+        game.getPlayers().get(2).setScore(0);
+        game.getPlayers().get(3).setScore(0);
+        assertEquals("""
+                                Round has Ended
+                                --Player scores--
+                                p1 : 2 Points
+                                p2 : 100 Points
+                                p3 : 0 Points
+                                p4 : 6 Points
+                                Game has Ended
+                                p3 is the Winner!
+                                """,game.endGame());
     }
 }
