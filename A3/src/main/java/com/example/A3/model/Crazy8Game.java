@@ -344,7 +344,7 @@ public class Crazy8Game {
 
     public String repromptForCard(boolean canPlayResponse){
         String prompt = "";
-        if(canPlayResponse == false){
+        if (!canPlayResponse) {
             prompt = "The card you selected cannot be played, input another card";
         }
         return prompt;
