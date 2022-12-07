@@ -30,20 +30,36 @@ public class ChatController {
     @SendTo("/topic/public")
     public void sendMessage(@Payload final ChatMessage chatMessage){
         //test cases for part 1 and part 2
-        if(chatMessage.getSender().equals(game.getPlayers().get(0).getName()) && chatMessage.getContent().equals("TEST_ROW_41")){
+        if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_41")){
             game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3C")));
             game.setCurrentTopCard("4C");
-            dealerSendMessagetoUser("Initialized Test Row 41",game.getPlayers().get(0).getUser().getName());
-            dealerSendMessagetoUser("Your hand : " + game.getPlayers().get(0).getHand().toString(),game.getPlayers().get(0).getUser().getName());
+            game.setCurrPlayerIndex(0);
+            dealerSendMessagetoUser("Initialized Test Row 41",game.getPlayers().get(3).getUser().getName());
+
             sendCurrentCardAndTurn();
+            sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
             return;
-        }else if(chatMessage.getSender().equals(game.getPlayers().get(0).getName()) && chatMessage.getContent().equals("TEST_ROW_45")){
+        }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_45")){
             game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C")));
             game.setCurrentTopCard("4C");
             game.setCurrPlayerIndex(3);
-            dealerSendMessagetoUser("Initialized Test Row 45",game.getPlayers().get(0).getUser().getName());
-            dealerSendMessagetoUser("Your hand : " + game.getPlayers().get(3).getHand().toString(),game.getPlayers().get(3).getUser().getName());
+            dealerSendMessagetoUser("Initialized Test Row 45",game.getPlayers().get(3).getUser().getName());
+
             sendCurrentCardAndTurn();
+            sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            return;
+        }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_0")){
+            game.getPlayers().get(0).setHand(new ArrayList<>(List.of("10C","3S")));
+            game.getPlayers().get(1).setHand(new ArrayList<>(List.of("5C")));
+            game.getPlayers().get(2).setHand(new ArrayList<>(List.of("6C")));
+            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("7C")));
+            game.setCurrPlayerIndex(0);
+            game.setCurrentTopCard("4C");
+            dealerSendMessagetoUser("Initialized Test Row 0",game.getPlayers().get(3).getUser().getName());
+
+
+            sendCurrentCardAndTurn();
+            sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
             return;
         }
 
@@ -85,6 +101,7 @@ public class ChatController {
 
             }else if(chatMessage.getContent().length()==2 || chatMessage.getContent().length()==3){
                 response[0] = chatMessage.getContent();
+                System.out.println(response[0]);
             }
 
 
@@ -93,11 +110,13 @@ public class ChatController {
 
             }
 
+            Player currentPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
             boolean result = game.playRound(response[0], null, null, null, null);
+            dealerSendMessagetoUser("Player turn ended",currentPlayer.getUser().getName());
 
             if(result == false){
-                dealerSendMessagetoUser("you do not have that card, try again", game.getPlayers().get(game.getCurrPlayerIndex()).getUser().getName());
-
+                dealerSendMessagetoUser("you cannot play that, try again", currentPlayer.getUser().getName());
+                return;
             }
 
 
@@ -110,27 +129,37 @@ public class ChatController {
             }
 
             sendCurrentCardAndTurn();
-            sendPlayerHand();
 
-            Player currentPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
-            if(!game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex()))){
+            Player nextPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
+            sendPlayerHand(nextPlayer);
+
+            System.out.println(nextPlayer.getUser().getName());
+            if(!game.hasPlayableCard(nextPlayer)){
+
                 String oldCard = game.getCurrentTopCard();
-                dealerSendMessagetoUser("Player does not have a playable card, drawing cards",currentPlayer.getUser().getName());
+                dealerSendMessagetoUser("Player does not have a playable card, drawing cards",nextPlayer.getUser().getName());
                 String[] drewcards = game.drawUpTo3(new String[]{null, null, null});
-                dealerSendMessagetoUser("Player drew : " + Arrays.toString(drewcards),currentPlayer.getUser().getName());
+                dealerSendMessagetoUser("Player drew : " + Arrays.toString(drewcards),nextPlayer.getUser().getName());
 
                 if(oldCard != game.getCurrentTopCard()){
-                    dealerSendMessagetoUser("Player played : " + game.getCurrentTopCard(),currentPlayer.getUser().getName());
+                    dealerSendMessagetoUser("Player played : " + game.getCurrentTopCard(),nextPlayer.getUser().getName());
+                    dealerSendMessagetoUser("Player turn ended",nextPlayer.getUser().getName());
+
                 }else{
-                    dealerSendMessagetoUser("Player drew 3 card and still can't play, turn over" ,currentPlayer.getUser().getName());
+                    dealerSendMessagetoUser("Player drew 3 card and still can't play, turn over" ,nextPlayer.getUser().getName());
                 }
 
+
                 sendCurrentCardAndTurn();
-                sendPlayerHand();
+                //next next player
+                sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+
             }
 
-            if (game.didReachWinningThreshold()) {
+            if (game.didFinishRound()) {
                 dealerBroadcastMessage(game.endGame());
+                sendCurrentCardAndTurn();
+                sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
             }
 
 
@@ -159,24 +188,31 @@ public class ChatController {
             game.dealPlayerCards(new String[][]{{null,null,null,null,null},{null,null,null,null,null},{null,null,null,null,null},{null,null,null,null,null}});
 
             sendCurrentCardAndTurn();
-            sendPlayerHand();
 
-            Player currentPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
+            Player nextPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
+            sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
 
-            if(!game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex()))){
+
+            if(!game.hasPlayableCard(nextPlayer)){
+
                 String oldCard = game.getCurrentTopCard();
-                dealerSendMessagetoUser("Player does not have a playable card, drawing cards",currentPlayer.getUser().getName());
+                dealerSendMessagetoUser("Player does not have a playable card, drawing cards",nextPlayer.getUser().getName());
                 String[] drewcards = game.drawUpTo3(new String[]{null, null, null});
-                dealerSendMessagetoUser("Player drew : " + Arrays.toString(drewcards),currentPlayer.getUser().getName());
+                dealerSendMessagetoUser("Player drew : " + Arrays.toString(drewcards),nextPlayer.getUser().getName());
 
                 if(oldCard != game.getCurrentTopCard()){
-                    dealerSendMessagetoUser("Player played : " + game.getCurrentTopCard(),currentPlayer.getUser().getName());
+                    dealerSendMessagetoUser("Player played : " + game.getCurrentTopCard(),nextPlayer.getUser().getName());
+                    dealerSendMessagetoUser("Player turn ended",nextPlayer.getUser().getName());
+
                 }else{
-                    dealerSendMessagetoUser("Player drew 3 card and still can't play, turn over" ,currentPlayer.getUser().getName());
+                    dealerSendMessagetoUser("Player drew 3 card and still can't play, turn over" ,nextPlayer.getUser().getName());
                 }
 
+
                 sendCurrentCardAndTurn();
-                sendPlayerHand();
+                //next next player
+                sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+
             }
         }
     }
@@ -194,7 +230,7 @@ public class ChatController {
                 .sender("Dealer")
                 .content(game.showCardAndTurn())
                 .build();
-        sendingOperations.convertAndSend("/topic/public",msg);
+        sendingOperations.convertAndSendToUser(game.getPlayers().get(game.getCurrPlayerIndex()).getUser().getName(),"/topic/private.messages",msg);
 
 
     }
@@ -215,15 +251,15 @@ public class ChatController {
         sendingOperations.convertAndSend("/topic/public", msg);
     }
 
-    public void sendPlayerHand(){
-        for(Player p: game.getPlayers()){
-            final ChatMessage playerHand = ChatMessage.builder()
-                    .type(MessageType.CHAT)
-                    .sender("Dealer")
-                    .content("Your hand : " + p.getHand().toString())
-                    .build();
-            sendingOperations.convertAndSendToUser(p.getUser().getName(), "/topic/private.messages",playerHand);
-        }
+    public void sendPlayerHand(Player p){
+
+        final ChatMessage playerHand = ChatMessage.builder()
+                .type(MessageType.CHAT)
+                .sender("Dealer")
+                .content("Your hand : " + p.getHand().toString())
+                .build();
+        sendingOperations.convertAndSendToUser(p.getUser().getName(), "/topic/private.messages",playerHand);
+
     }
 
     public void sendInvalidInputError(){
