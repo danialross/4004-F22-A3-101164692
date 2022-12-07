@@ -326,10 +326,11 @@ class Crazy8GameTest {
 
     @Test
     void dealerDrawCard() {
-        game.dealerDrawCard(null);
-        assertNotNull(game.getCurrentTopCard());
         game.dealerDrawCard("7D");
         assertEquals("7D",game.getCurrentTopCard());
+        game.dealerDrawCard(null);
+        assertNotNull(game.getCurrentTopCard());
+
 
     }
 
