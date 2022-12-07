@@ -36,6 +36,7 @@ public class ChatController {
             game.setCurrPlayerIndex(0);
             dealerSendMessagetoUser("Initialized Test Row 41",game.getPlayers().get(3).getUser().getName());
 
+            sendDirection();
             sendCurrentCardAndTurn();
             sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
             return;
@@ -45,6 +46,7 @@ public class ChatController {
             game.setCurrPlayerIndex(3);
             dealerSendMessagetoUser("Initialized Test Row 45",game.getPlayers().get(3).getUser().getName());
 
+            sendDirection();
             sendCurrentCardAndTurn();
             sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
             return;
@@ -57,7 +59,7 @@ public class ChatController {
             game.setCurrentTopCard("4C");
             dealerSendMessagetoUser("Initialized Test Row 0",game.getPlayers().get(3).getUser().getName());
 
-
+            sendDirection();
             sendCurrentCardAndTurn();
             sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
             return;
@@ -128,6 +130,7 @@ public class ChatController {
                 dealerBroadcastMessage(game.notifyAction(4));
             }
 
+            sendDirection();
             sendCurrentCardAndTurn();
 
             Player nextPlayer = game.getPlayers().get(game.getCurrPlayerIndex());
@@ -149,7 +152,7 @@ public class ChatController {
                     dealerSendMessagetoUser("Player drew 3 card and still can't play, turn over" ,nextPlayer.getUser().getName());
                 }
 
-
+                sendDirection();
                 sendCurrentCardAndTurn();
                 //next next player
                 sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
@@ -158,6 +161,9 @@ public class ChatController {
 
             if (game.didFinishRound()) {
                 dealerBroadcastMessage(game.endGame());
+            }
+            if(!game.didReachWinningThreshold()){
+                sendDirection();
                 sendCurrentCardAndTurn();
                 sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
             }
@@ -269,5 +275,16 @@ public class ChatController {
                 .content("Invalid Response, write the ranks and the suits, Eg.'8H' or 'KH,3C'.")
                 .build();
         sendingOperations.convertAndSendToUser(game.getPlayers().get(game.getCurrPlayerIndex()).getUser().getName(), "/topic/private.messages",msg);
+    }
+
+    public void sendDirection(){
+        final ChatMessage msg = ChatMessage.builder()
+                .type(MessageType.CHAT)
+                .sender("Dealer")
+                .content(game.showDirection())
+                .build();
+        sendingOperations.convertAndSendToUser(game.getPlayers().get(game.getCurrPlayerIndex()).getUser().getName(),"/topic/private.messages",msg);
+
+
     }
 }
