@@ -313,12 +313,13 @@ public class Crazy8Game {
                 calculateHand(players.get(i));
             }
             score += "Round has Ended\n";
-        }
-        score += showScores();
 
-        if(didReachWinningThreshold()){
-            score += "Game has Ended\n";
-            score += getWinner().getName() + " is the Winner!\n";
+            score += showScores();
+
+            if(didReachWinningThreshold()){
+                score += "Game has Ended\n";
+                score += getWinner().getName() + " is the Winner!\n";
+            }
         }
         return score;
     }
@@ -391,6 +392,7 @@ public class Crazy8Game {
     public Boolean didFinishRound(){
         for (Player player : players) {
             if (player.getHand().size() == 0) {
+                setupNextRound(null);
                 return true;
             }
         }
