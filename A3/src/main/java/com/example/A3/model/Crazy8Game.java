@@ -295,14 +295,37 @@ public class Crazy8Game {
         if(card.charAt(0)=='8'){
             return true;
         }
-        if(card.contains("10")){
+
+        if( currentTopCard.contains("10")){
             if(card.charAt(0)==currentTopCard.charAt(0) ){
                 return true;
             }
-            if(card.charAt(2)==currentTopCard.charAt(1)){
+            if(card.charAt(1)==currentTopCard.charAt(2)){
                 return true;
             }
         }
+
+        if(card.contains("10")){
+
+            if(currentTopCard.contains("10")){
+                if(card.charAt(0)==currentTopCard.charAt(0) ){
+                    return true;
+                }
+                if(card.charAt(2)==currentTopCard.charAt(2)){
+                    return true;
+                }
+            }else{
+                if(card.charAt(0)==currentTopCard.charAt(0) ){
+                    return true;
+                }
+                if(card.charAt(2)==currentTopCard.charAt(1)){
+                    return true;
+                }
+            }
+
+
+        }
+
         if(card.charAt(0)==currentTopCard.charAt(0) ){
             return true;
         }
