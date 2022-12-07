@@ -13,7 +13,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 
 @Controller
@@ -29,6 +29,27 @@ public class ChatController {
     @MessageMapping("/chat.send")
     @SendTo("/topic/public")
     public void sendMessage(@Payload final ChatMessage chatMessage){
+        //test cases for part 1 and part 2
+        if(chatMessage.getSender().equals(game.getPlayers().get(0).getName()) && chatMessage.getContent().equals("TEST_ROW_41")){
+            game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3C")));
+            game.setCurrentTopCard("4C");
+            dealerSendMessagetoUser("Initialized Test Row 41",game.getPlayers().get(0).getUser().getName());
+            dealerSendMessagetoUser("Your hand : " + game.getPlayers().get(0).getHand().toString(),game.getPlayers().get(0).getUser().getName());
+            sendCurrentCardAndTurn();
+            return;
+        }else if(chatMessage.getSender().equals(game.getPlayers().get(0).getName()) && chatMessage.getContent().equals("TEST_ROW_45")){
+            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C")));
+            game.setCurrentTopCard("4C");
+            game.setCurrPlayerIndex(3);
+            dealerSendMessagetoUser("Initialized Test Row 45",game.getPlayers().get(0).getUser().getName());
+            dealerSendMessagetoUser("Your hand : " + game.getPlayers().get(3).getHand().toString(),game.getPlayers().get(3).getUser().getName());
+            sendCurrentCardAndTurn();
+            return;
+        }
+
+
+
+
         if(chatMessage.getSender().equals(game.getPlayers().get(game.getCurrPlayerIndex()).getName())){
 
             //less than 0 DNE
@@ -70,35 +91,36 @@ public class ChatController {
                 response[0] = chatMessage.getContent();
             }
 
-            if (!game.didReachWinningThreshold()) {
-                if (game.isPlus2Played()) {
-                    if (response[1] != null) {
-                        game.playRound(null, null, response, null, null);
-                    } else {
-                        game.playRound(null, new String[game.getPlus2Stack()], response, new String[]{null, null, null}, null);
-                    }
-                } else {
-                    if(chatMessage.getContent().contains("8")){
-                        dealerSendMessagetoUser(game.getPlayers().get(game.getCurrPlayerIndex()).getUser().getName(), game.requestAction(1));
-                        game.playRound(response[0], null, null, null, null);
-                        game.setCurrPlayerIndex(game.getCurrPlayerIndex()-1);
-                        waitingForResponse = true;
-                        return;
-                    }else{
-                        game.playRound(response[0], null, null, null, null);
-                    }
-                }
 
-                if(game.getCurrentTopCard().charAt(0) == 'A'){
-                    dealerBroadcastMessage(game.notifyAction(2));
-                }else if(game.getCurrentTopCard().charAt(0) == 'Q'){
-                    dealerBroadcastMessage(game.notifyAction(3));
-                }else if(game.getCurrentTopCard().charAt(0) == '8'){
-                    dealerBroadcastMessage(game.notifyAction(4));
+            if (game.isPlus2Played()) {
+                if (response[1] != null) {
+                    game.playRound(null, null, response, null, null);
+                } else {
+                    game.playRound(null, new String[game.getPlus2Stack()], response, new String[]{null, null, null}, null);
                 }
-                sendCurrentCardAndTurn();
-                sendPlayerHand();
-            }else{
+            } else {
+                if(chatMessage.getContent().contains("8")){
+                    dealerSendMessagetoUser(game.getPlayers().get(game.getCurrPlayerIndex()).getUser().getName(), game.requestAction(1));
+                    game.playRound(response[0], null, null, null, null);
+                    game.setCurrPlayerIndex(game.getCurrPlayerIndex()-1);
+                    waitingForResponse = true;
+                    return;
+                }else{
+                    game.playRound(response[0], null, null, null, null);
+                }
+            }
+
+            if(game.getCurrentTopCard().charAt(0) == 'A'){
+                dealerBroadcastMessage(game.notifyAction(2));
+            }else if(game.getCurrentTopCard().charAt(0) == 'Q'){
+                dealerBroadcastMessage(game.notifyAction(3));
+            }else if(game.getCurrentTopCard().charAt(0) == '8'){
+                dealerBroadcastMessage(game.notifyAction(4));
+            }
+            sendCurrentCardAndTurn();
+            sendPlayerHand();
+
+            if (game.didReachWinningThreshold()) {
                 dealerBroadcastMessage(game.endGame());
             }
 
