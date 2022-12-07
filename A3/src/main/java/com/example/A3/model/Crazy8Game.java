@@ -312,13 +312,15 @@ public class Crazy8Game {
             for (int i = 0; i < players.size(); i++) {
                 calculateHand(players.get(i));
             }
-            score += "Round has Ended\n";
+            score += "Round has Ended, \n";
 
             score += showScores();
 
             if(didReachWinningThreshold()){
-                score += "Game has Ended\n";
-                score += getWinner().getName() + " is the Winner!\n";
+                score += "Game has Ended, \n";
+                score += getWinner().getName() + " is the Winner!";
+            }else{
+                score += "New Game Starting.";
             }
         }
         return score;
@@ -410,11 +412,11 @@ public class Crazy8Game {
     }
 
     public String showScores(){
-        return "--Player scores--\n" +
-                players.get(0).getName()+" : " + players.get(0).getScore() +" Points\n" +
-                players.get(1).getName()+" : " + players.get(1).getScore() +" Points\n" +
-                players.get(2).getName()+" : " + players.get(2).getScore() +" Points\n" +
-                players.get(3).getName()+" : " + players.get(3).getScore() +" Points\n";
+        return "Player scores: \n" +
+                players.get(0).getName()+" scored " + players.get(0).getScore() +" Points, \n" +
+                players.get(1).getName()+" scored " + players.get(1).getScore() +" Points, \n" +
+                players.get(2).getName()+" scored " + players.get(2).getScore() +" Points, \n" +
+                players.get(3).getName()+" scored " + players.get(3).getScore() +" Points, \n";
     }
 
     public String showCardAndTurn(){

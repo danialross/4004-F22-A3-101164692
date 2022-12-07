@@ -431,11 +431,11 @@ class Crazy8GameTest {
     @Test
     void showScores() {
         String expectedString = """
-                --Player scores--
-                p1 : 0 Points
-                p2 : 0 Points
-                p3 : 0 Points
-                p4 : 0 Points
+                Player scores:\040
+                p1 scored 0 Points,\040
+                p2 scored 0 Points,\040
+                p3 scored 0 Points,\040
+                p4 scored 0 Points,\040
                 """;
 
         assertEquals(expectedString,game.showScores());
@@ -550,18 +550,19 @@ class Crazy8GameTest {
 
     @Test
     void endGame() {
+
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
         game.getPlayers().get(1).setHand(new ArrayList<>(List.of("6H","4S")));
         game.getPlayers().get(2).setHand(new ArrayList<>());
         game.getPlayers().get(3).setHand(new ArrayList<>(List.of("6H")));
         assertEquals("""
-                                Round has Ended
-                                --Player scores--
-                                p1 : 2 Points
-                                p2 : 10 Points
-                                p3 : 0 Points
-                                p4 : 6 Points
-                                """,game.endGame());
+                                Round has Ended,\040
+                                Player scores:\040
+                                p1 scored 2 Points,\040
+                                p2 scored 10 Points,\040
+                                p3 scored 0 Points,\040
+                                p4 scored 6 Points,\040
+                                New Game Starting.""",game.endGame());
 
         game.getPlayers().get(0).setHand(new ArrayList<>(List.of("2C")));
         game.getPlayers().get(1).setHand(new ArrayList<>(List.of("6H","4S")));
@@ -572,14 +573,13 @@ class Crazy8GameTest {
         game.getPlayers().get(2).setScore(0);
         game.getPlayers().get(3).setScore(0);
         assertEquals("""
-                                Round has Ended
-                                --Player scores--
-                                p1 : 2 Points
-                                p2 : 100 Points
-                                p3 : 0 Points
-                                p4 : 6 Points
-                                Game has Ended
-                                p3 is the Winner!
-                                """,game.endGame());
+                                Round has Ended,\040
+                                Player scores:\040
+                                p1 scored 2 Points,\040
+                                p2 scored 100 Points,\040
+                                p3 scored 0 Points,\040
+                                p4 scored 6 Points,\040
+                                Game has Ended,\040
+                                p3 is the Winner!""",game.endGame());
     }
 }
