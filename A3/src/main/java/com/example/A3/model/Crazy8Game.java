@@ -210,6 +210,7 @@ public class Crazy8Game {
         if(currentFirstPlayer == 4 ){
             currentFirstPlayer = 0;
         }
+        dealPlayerCards(new String[][]{{null,null,null,null,null},{null,null,null,null,null},{null,null,null,null,null},{null,null,null,null,null}});
         currPlayerIndex = currentFirstPlayer;
         dealerDrawCard(firstCard);
     }
@@ -425,7 +426,6 @@ public class Crazy8Game {
     public Boolean didFinishRound(){
         for (Player player : players) {
             if (player.getHand().size() == 0) {
-                setupNextRound(null);
                 return true;
             }
         }
