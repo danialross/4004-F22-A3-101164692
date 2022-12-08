@@ -28,27 +28,82 @@ public class ChatController {
 
     @MessageMapping("/chat.send")
     @SendTo("/topic/public")
-    public void sendMessage(@Payload final ChatMessage chatMessage){
+    public void sendMessage(@Payload final ChatMessage chatMessage) throws InterruptedException {
         //test cases for part 1 and part 2
         if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_41")){
             game.getPlayers().get(0).setHand(new ArrayList<>(List.of("3C","KH")));
+            game.getPlayers().get(1).setHand(new ArrayList<>(List.of("8C")));
             game.setCurrentTopCard("4C");
             game.setCurrPlayerIndex(0);
             dealerSendMessagetoUser("Initialized Test Row 41",game.getPlayers().get(3).getUser().getName());
 
             sendDirection();
+            Thread.sleep(500);
             sendCurrentCardAndTurn();
+            Thread.sleep(500);
             sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            Thread.sleep(500);
+            return;
+        }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_42")){
+            game.getPlayers().get(0).setHand(new ArrayList<>(List.of("8C","AH")));
+            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("7H","KH")));
+            game.setCurrentTopCard("4H");
+            game.setCurrPlayerIndex(0);
+            dealerSendMessagetoUser("Initialized Test Row 42",game.getPlayers().get(3).getUser().getName());
+
+            sendDirection();
+            Thread.sleep(500);
+            sendCurrentCardAndTurn();
+            Thread.sleep(500);
+            sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            Thread.sleep(500);
             return;
         }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_45")){
-            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C")));
+            game.setDirection(1);
+            game.getPlayers().get(0).setHand(new ArrayList<>(List.of("8C")));
+            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("3C","KH")));
             game.setCurrentTopCard("4C");
             game.setCurrPlayerIndex(3);
             dealerSendMessagetoUser("Initialized Test Row 45",game.getPlayers().get(3).getUser().getName());
+            Thread.sleep(500);
 
             sendDirection();
+            Thread.sleep(500);
             sendCurrentCardAndTurn();
+            Thread.sleep(500);
             sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            Thread.sleep(500);
+            return;
+        }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_46")){
+            game.setDirection(1);
+            game.getPlayers().get(2).setHand(new ArrayList<>(List.of("7H","8D")));
+            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("QC","AH")));
+            game.setCurrentTopCard("4H");
+            game.setCurrPlayerIndex(3);
+            dealerSendMessagetoUser("Initialized Test Row 46",game.getPlayers().get(3).getUser().getName());
+            Thread.sleep(500);
+
+            sendDirection();
+            Thread.sleep(500);
+            sendCurrentCardAndTurn();
+            Thread.sleep(500);
+            sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            Thread.sleep(500);
+            return;
+        }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_48")){
+            game.getPlayers().get(1).setHand(new ArrayList<>(List.of("3C")));
+            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("QC","KH")));
+            game.setCurrentTopCard("4C");
+            game.setCurrPlayerIndex(3);
+            dealerSendMessagetoUser("Initialized Test Row 48",game.getPlayers().get(3).getUser().getName());
+            Thread.sleep(500);
+
+            sendDirection();
+            Thread.sleep(500);
+            sendCurrentCardAndTurn();
+            Thread.sleep(500);
+            sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            Thread.sleep(500);
             return;
         }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("TEST_ROW_77")){
             game.getPlayers().get(0).setHand(new ArrayList<>(List.of("AS")));
@@ -58,10 +113,23 @@ public class ChatController {
             game.setCurrPlayerIndex(1);
             game.setCurrentTopCard("10S");
             dealerSendMessagetoUser("Initialized Test Row 77",game.getPlayers().get(3).getUser().getName());
+            Thread.sleep(500);
 
             sendDirection();
+            Thread.sleep(500);
             sendCurrentCardAndTurn();
+            Thread.sleep(500);
             sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            Thread.sleep(500);
+            return;
+        }else if(chatMessage.getSender().equals(game.getPlayers().get(3).getName()) && chatMessage.getContent().equals("RESET_SERVER")){
+            game.getPlayers().get(0).setHand(new ArrayList<>(List.of("8C")));
+            game.getPlayers().get(1).setHand(new ArrayList<>(List.of("8Q")));
+            game.getPlayers().get(2).setHand(new ArrayList<>(List.of("8S")));
+            game.getPlayers().get(3).setHand(new ArrayList<>(List.of("8H")));
+            game.setCurrentTopCard("4C");
+            game.setCurrPlayerIndex(0);
+            dealerSendMessagetoUser("Initialized Server Reset",game.getPlayers().get(3).getUser().getName());
             return;
         }
 
@@ -120,6 +188,8 @@ public class ChatController {
                 return;
             }
             dealerSendMessagetoUser("Player turn ended",currentPlayer.getUser().getName());
+            Thread.sleep(500);
+
 
             if(game.getCurrentTopCard().charAt(0) == 'A'){
                 dealerBroadcastMessage(game.notifyAction(2));
@@ -128,6 +198,7 @@ public class ChatController {
             }else if(game.getCurrentTopCard().charAt(0) == '8'){
                 dealerBroadcastMessage(game.notifyAction(4));
             }
+            Thread.sleep(500);
 
 
             while(!game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex())) && game.didFinishRound() == false){
@@ -136,12 +207,16 @@ public class ChatController {
 
             if (game.didFinishRound()) {
                 dealerBroadcastMessage(game.endGame());
+                Thread.sleep(500);
                 game.setupNextRound(null);
             }
             if(!game.didReachWinningThreshold()){
                 sendDirection();
+                Thread.sleep(500);
                 sendCurrentCardAndTurn();
+                Thread.sleep(500);
                 sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+                Thread.sleep(500);
             }
 
 
@@ -157,7 +232,7 @@ public class ChatController {
 
     @MessageMapping("/chat.newUser")
     @SendTo("/topic/public")
-    public void newUser(@Payload final ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
+    public void newUser(@Payload final ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) throws InterruptedException {
 
         headerAccessor.getSessionAttributes().put("username",chatMessage.getSender());
         players.add(new Player(headerAccessor.getUser(), chatMessage.getSender()));
@@ -170,17 +245,22 @@ public class ChatController {
             game.dealPlayerCards(new String[][]{{null,null,null,null,null},{null,null,null,null,null},{null,null,null,null,null},{null,null,null,null,null}});
 
             sendDirection();
+            Thread.sleep(500);
             sendCurrentCardAndTurn();
+            Thread.sleep(500);
             sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+            Thread.sleep(500);
 
 
             if(!game.hasPlayableCard(game.getPlayers().get(game.getCurrPlayerIndex()))){
 
                 drawCardForPlayer();
                 sendDirection();
+                Thread.sleep(500);
                 sendCurrentCardAndTurn();
-                //next next player
+                Thread.sleep(500);
                 sendPlayerHand(game.getPlayers().get(game.getCurrPlayerIndex()));
+                Thread.sleep(500);
 
             }
         }

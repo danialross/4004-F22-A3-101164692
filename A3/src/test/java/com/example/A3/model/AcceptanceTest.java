@@ -19,18 +19,15 @@ import static org.hamcrest.Matchers.is;
 public class AcceptanceTest {
 
 
-    WebDriver d1;
-    WebDriver d2;
-    WebDriver d3;
-    WebDriver d4;
+    static WebDriver d1;
+    static WebDriver d2;
+    static WebDriver d3;
+    static WebDriver d4;
 
     @BeforeAll
-    public static void setup(){
+    public static void setup() throws InterruptedException {
         WebDriverManager.firefoxdriver().setup();
-    }
 
-    @BeforeEach
-    void init() throws Exception {
         d1 = new FirefoxDriver();
         d2 = new FirefoxDriver();
         d3 = new FirefoxDriver();
@@ -42,56 +39,132 @@ public class AcceptanceTest {
         d4.get("localhost:8090");
 
         Thread.sleep(500);
-
         d1.findElement(By.id("username")).sendKeys("player1");
-		d1.findElement(By.id("submit1")).click();
-        d2.findElement(By.id("username")).sendKeys("player2");
-        d2.findElement(By.id("submit1")).click();
-        d3.findElement(By.id("username")).sendKeys("player3");
-        d3.findElement(By.id("submit1")).click();
-        d4.findElement(By.id("username")).sendKeys("player4");
-        d4.findElement(By.id("submit1")).click();
-
         Thread.sleep(500);
-
-    }
-
-    @AfterEach
-    void stop(){
-
-        d1.quit();
-        d2.quit();
-        d3.quit();
-        d4.quit();
-
-
+        d1.findElement(By.id("submit1")).click();
+        Thread.sleep(500);
+        d2.findElement(By.id("username")).sendKeys("player2");
+        Thread.sleep(500);
+        d2.findElement(By.id("submit1")).click();
+        Thread.sleep(500);
+        d3.findElement(By.id("username")).sendKeys("player3");
+        Thread.sleep(500);
+        d3.findElement(By.id("submit1")).click();
+        Thread.sleep(500);
+        d4.findElement(By.id("username")).sendKeys("player4");
+        Thread.sleep(500);
+        d4.findElement(By.id("submit1")).click();
+        Thread.sleep(500);
     }
 
     @Test
     public void row41() throws InterruptedException {
+
         d4.findElement(By.id("message")).sendKeys("TEST_ROW_41");
 		d4.findElement(By.id("submit2")).click();
-
-        Thread.sleep(500);
+        Thread.sleep(2000);
 
 		d1.findElement(By.id("message")).sendKeys("3C");
 		d1.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
 
-		Thread.sleep(500);
+		assertThat(d2.findElement(By.xpath("//*[@id=\"chat\"]/div[6]/div[1]")).getText(),is("Current Card: 3C player2's turn"));
 
-		assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[6]/div[1]")).getText(),is("Current Card: 3C player2's turn"));
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
     }
+    //p1 plays 1H assert next player is player 4 AND interface must show now playing in opposite direction (i.e., going right)
+    //        player4 plays 7H and next player is player 3
 
     @Test
-    void row77() throws InterruptedException {
-        d4.findElement(By.id("message")).sendKeys("TEST_ROW_77");
+    void row42() throws InterruptedException {
+
+        d4.findElement(By.id("message")).sendKeys("TEST_ROW_42");
         d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
 
-        Thread.sleep(500);
+        d1.findElement(By.id("message")).sendKeys("AH");
+        d1.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
 
-        d2.findElement(By.id("message")).sendKeys("5S");
-        d2.findElement(By.id("submit2")).click();
-        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[9]/div[1]\n")).getText(),is("Round has Ended, Player scores: player1 scored 1 Points, player2 scored 0 Points, player3 scored 86 Points, player4 scored 102 Points, Game has Ended, player2 is the Winner!"));
+        assertThat(d4.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[7]/div[1]")).getText(),is("Current Direction is Right"));
+        assertThat(d4.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[8]/div[1]")).getText(),is("Current Card: AH player4's turn"));
 
+        d4.findElement(By.id("message")).sendKeys("7H");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        assertThat(d3.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[6]/div[1]")).getText(),is("Current Card: 7H player3's turn"));
+
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
     }
+
+
+   @Test
+    public void row45() throws InterruptedException {
+        d4.findElement(By.id("message")).sendKeys("TEST_ROW_45");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        d4.findElement(By.id("message")).sendKeys("3C");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        assertThat(d1.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[19]/div[1]")).getText(),is("Current Card: 3C player1's turn"));
+
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+    }
+
+//    @Test
+//    public void row46() throws InterruptedException {
+//        d4.findElement(By.id("message")).sendKeys("TEST_ROW_46");
+//        d4.findElement(By.id("submit2")).click();
+//        Thread.sleep(500);
+//
+//        d4.findElement(By.id("message")).sendKeys("AH");
+//        d4.findElement(By.id("submit2")).click();
+//        Thread.sleep(500);
+//        assertThat(d3.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[9]/div[1]")).getText(),is("Current Direction is Right"));
+//        assertThat(d3.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[11]/div[1]")).getText(),is("Current Card: AH player3's turn"));
+//
+//        d3.findElement(By.id("message")).sendKeys("7H");
+//        d3.findElement(By.id("submit2")).click();
+//        Thread.sleep(500);
+//
+//        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[12]/div[1]")).getText(),is("Current Card: 7H player2's turn"));
+//    }
+
+//    @Test
+//    public void row48() throws InterruptedException {
+//        d4.findElement(By.id("message")).sendKeys("TEST_ROW_48");
+//        d4.findElement(By.id("submit2")).click();
+//
+//        Thread.sleep(500);
+//
+//        d4.findElement(By.id("message")).sendKeys("QC");
+//        d4.findElement(By.id("submit2")).click();
+//
+//        Thread.sleep(500);
+//        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[5]/div[1]")).getText(),is("a Queen was played, the next player's turn has been skipped"));
+//        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[7]/div[1]")).getText(),is("Current Card: QC player2's turn"));
+//    }
+
+//    @Test
+//    void row77() throws InterruptedException {
+//        d4.findElement(By.id("message")).sendKeys("TEST_ROW_77");
+//        d4.findElement(By.id("submit2")).click();
+//
+//        Thread.sleep(500);
+//
+//        d2.findElement(By.id("message")).sendKeys("5S");
+//        d2.findElement(By.id("submit2")).click();
+//        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[9]/div[1]\n")).getText(),is("Round has Ended, Player scores: player1 scored 1 Points, player2 scored 0 Points, player3 scored 86 Points, player4 scored 102 Points, Game has Ended, player2 is the Winner!"));
+//
+//    }
 }
