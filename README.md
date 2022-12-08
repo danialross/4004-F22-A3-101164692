@@ -2,7 +2,9 @@
  COMP4004 Assignment 3 
  
  all unit test commits are labelled as "test" while acceptance are labelled "A-Test"
+ 
  port = localhost:8090
+ 
  server must be launched before the acceptance test can be ran
  
  to run acceptance test, run the test from maven test
