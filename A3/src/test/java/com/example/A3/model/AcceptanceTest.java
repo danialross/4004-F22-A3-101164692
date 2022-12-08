@@ -138,22 +138,30 @@ public class AcceptanceTest {
         Thread.sleep(2000);
 
         assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[11]/div[1]")).getText(),is("Current Card: 7H player2's turn"));
+
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
     }
 
-//    @Test
-//    public void row48() throws InterruptedException {
-//        d4.findElement(By.id("message")).sendKeys("TEST_ROW_48");
-//        d4.findElement(By.id("submit2")).click();
-//
-//        Thread.sleep(500);
-//
-//        d4.findElement(By.id("message")).sendKeys("QC");
-//        d4.findElement(By.id("submit2")).click();
-//
-//        Thread.sleep(500);
-//        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[5]/div[1]")).getText(),is("a Queen was played, the next player's turn has been skipped"));
-//        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[7]/div[1]")).getText(),is("Current Card: QC player2's turn"));
-//    }
+    @Test
+    public void row48() throws InterruptedException {
+        d4.findElement(By.id("message")).sendKeys("TEST_ROW_48");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+
+        d4.findElement(By.id("message")).sendKeys("QC");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[13]/div[1]")).getText(),is("a Queen was played, the next player's turn has been skipped"));
+        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[15]/div[1]")).getText(),is("Current Card: QC player2's turn"));
+
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+    }
 
 //    @Test
 //    void row77() throws InterruptedException {
