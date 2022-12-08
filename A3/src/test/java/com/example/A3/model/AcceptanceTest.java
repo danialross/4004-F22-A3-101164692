@@ -163,6 +163,58 @@ public class AcceptanceTest {
         Thread.sleep(2000);
     }
 
+    @Test
+    public void row51() throws InterruptedException {
+        d4.findElement(By.id("message")).sendKeys("TEST_ROW_51");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+
+        d1.findElement(By.id("message")).sendKeys("KH");
+        d1.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        assertThat(d1.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[26]/div[1]")).getText(),is("Player turn ended"));
+
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+    }
+    @Test
+    public void row52() throws InterruptedException {
+        d4.findElement(By.id("message")).sendKeys("TEST_ROW_51");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+
+        d1.findElement(By.id("message")).sendKeys("7C");
+        d1.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        assertThat(d1.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[26]/div[1]")).getText(),is("Player turn ended"));
+
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void row54() throws InterruptedException {
+        d4.findElement(By.id("message")).sendKeys("TEST_ROW_54");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+
+        d1.findElement(By.id("message")).sendKeys("5S");
+        d1.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        assertThat(d1.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[34]/div[1]")).getText(),is("You Cannot Play That Card, Try Again"));
+
+        d4.findElement(By.id("message")).sendKeys("RESET_SERVER");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+    }
 //    @Test
 //    void row77() throws InterruptedException {
 //        d4.findElement(By.id("message")).sendKeys("TEST_ROW_77");
