@@ -121,24 +121,24 @@ public class AcceptanceTest {
         Thread.sleep(2000);
     }
 
-//    @Test
-//    public void row46() throws InterruptedException {
-//        d4.findElement(By.id("message")).sendKeys("TEST_ROW_46");
-//        d4.findElement(By.id("submit2")).click();
-//        Thread.sleep(500);
-//
-//        d4.findElement(By.id("message")).sendKeys("AH");
-//        d4.findElement(By.id("submit2")).click();
-//        Thread.sleep(500);
-//        assertThat(d3.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[9]/div[1]")).getText(),is("Current Direction is Right"));
-//        assertThat(d3.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[11]/div[1]")).getText(),is("Current Card: AH player3's turn"));
-//
-//        d3.findElement(By.id("message")).sendKeys("7H");
-//        d3.findElement(By.id("submit2")).click();
-//        Thread.sleep(500);
-//
-//        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[12]/div[1]")).getText(),is("Current Card: 7H player2's turn"));
-//    }
+    @Test
+    public void row46() throws InterruptedException {
+        d4.findElement(By.id("message")).sendKeys("TEST_ROW_46");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        d4.findElement(By.id("message")).sendKeys("AH");
+        d4.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+        assertThat(d3.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[9]/div[1]")).getText(),is("Current Direction is Right"));
+        assertThat(d3.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[10]/div[1]")).getText(),is("Current Card: AH player3's turn"));
+
+        d3.findElement(By.id("message")).sendKeys("7H");
+        d3.findElement(By.id("submit2")).click();
+        Thread.sleep(2000);
+
+        assertThat(d2.findElement(By.xpath("/html/body/div/div[3]/div/div/div/div[2]/div/div[11]/div[1]")).getText(),is("Current Card: 7H player2's turn"));
+    }
 
 //    @Test
 //    public void row48() throws InterruptedException {
